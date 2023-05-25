@@ -99,9 +99,9 @@ func (b *Builder) Execute() error {
 	}
 
 	// generate the target package to java
-	if err := b.buildJava(); err != nil {
-		return err
-	}
+	// if err := b.buildJava(); err != nil {
+	// 	return err
+	// }
 
 	// compile the resource to sql orm file (including sql script, create table)
 	if b.NcraftAllEnabled || b.NcraftServiceEnabled {
