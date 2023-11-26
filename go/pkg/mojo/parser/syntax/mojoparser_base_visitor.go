@@ -1,7 +1,7 @@
-// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
+// Code generated from MojoParser.g4 by ANTLR 4.13.0. DO NOT EDIT.
 
 package syntax // MojoParser
-import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
+import "github.com/antlr4-go/antlr/v4"
 
 type BaseMojoParserVisitor struct {
 	*antlr.BaseParseTreeVisitor
@@ -15,7 +15,15 @@ func (v *BaseMojoParserVisitor) VisitStatement(ctx *StatementContext) interface{
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseMojoParserVisitor) VisitFreeFloatingDocument(ctx *FreeFloatingDocumentContext) interface{} {
+func (v *BaseMojoParserVisitor) VisitIfModifier(ctx *IfModifierContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMojoParserVisitor) VisitWhileModifier(ctx *WhileModifierContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMojoParserVisitor) VisitFloatingStatement(ctx *FloatingStatementContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -355,6 +363,22 @@ func (v *BaseMojoParserVisitor) VisitTuplePatternElement(ctx *TuplePatternElemen
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseMojoParserVisitor) VisitArrayPattern(ctx *ArrayPatternContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMojoParserVisitor) VisitArrayPatternElements(ctx *ArrayPatternElementsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMojoParserVisitor) VisitArrayPatternElement(ctx *ArrayPatternElementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMojoParserVisitor) VisitEnumValuePattern(ctx *EnumValuePatternContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseMojoParserVisitor) VisitOptionalPattern(ctx *OptionalPatternContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -395,10 +419,6 @@ func (v *BaseMojoParserVisitor) VisitExpression(ctx *ExpressionContext) interfac
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseMojoParserVisitor) VisitExpressions(ctx *ExpressionsContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseMojoParserVisitor) VisitPrefixExpression(ctx *PrefixExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -407,11 +427,27 @@ func (v *BaseMojoParserVisitor) VisitBinaryExpression(ctx *BinaryExpressionConte
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseMojoParserVisitor) VisitPrefixCallOperator(ctx *PrefixCallOperatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMojoParserVisitor) VisitInfixCallOperator(ctx *InfixCallOperatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseMojoParserVisitor) VisitBinaryExpressions(ctx *BinaryExpressionsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseMojoParserVisitor) VisitInOperator(ctx *InOperatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseMojoParserVisitor) VisitConditionalOperator(ctx *ConditionalOperatorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMojoParserVisitor) VisitIfOperator(ctx *IfOperatorContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -487,6 +523,18 @@ func (v *BaseMojoParserVisitor) VisitStructConstructionExpression(ctx *StructCon
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseMojoParserVisitor) VisitMatchExprSuffix(ctx *MatchExprSuffixContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMojoParserVisitor) VisitMatchExprCases(ctx *MatchExprCasesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseMojoParserVisitor) VisitMatchExprCase(ctx *MatchExprCaseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseMojoParserVisitor) VisitClosureExpression(ctx *ClosureExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -507,7 +555,7 @@ func (v *BaseMojoParserVisitor) VisitParenthesizedExpression(ctx *ParenthesizedE
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseMojoParserVisitor) VisitTupleExpression(ctx *TupleExpressionContext) interface{} {
+func (v *BaseMojoParserVisitor) VisitTupleLiteralExpression(ctx *TupleLiteralExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

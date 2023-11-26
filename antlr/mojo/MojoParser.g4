@@ -45,14 +45,24 @@ mojoFile : EOL* (statements)? EOL* EOF;
 // GRAMMAR OF A STATEMENT
 statement
  : declaration
- | expression
+ | expression (ifModifier | whileModifier)?
  | loopStatement
  | branchStatement
  | controlTransferStatement
- | freeFloatingDocument
+ | floatingStatement
  ;
 
-freeFloatingDocument : document;
+ifModifier
+    : KEYWORD_IF expression
+    ;
+
+whileModifier
+    : KEYWORD_WHILE expression
+    ;
+
+floatingStatement
+    : document
+    ;
 
 statements
     : statement (eos EOL* statement)* SEMI?
@@ -87,7 +97,7 @@ optionalBindingCondition
 
 // GRAMMAR OF A REPEAT-WHILE STATEMENT
 
-//repeatWhileStatement : KEYWORD_REPEATE codeBlock KEYWORD_WHILE expression ;
+// repeatWhileStatement : KEYWORD_REPEAT codeBlock KEYWORD_WHILE expression ;
 
 // GRAMMAR OF A BRANCH STATEMENT
 
@@ -110,8 +120,8 @@ elseClause
 // GRAMMAR OF A MATCH STATEMENT
 
 matchStatement : KEYWORD_MATCH expression EOL* LCURLY (EOL* matchCases)? EOL* RCURLY  ;
-matchCases : matchCase (eos EOL* matchCase)* eos;
-matchCase : pattern EOL* RIGHT_RIGHT_ARROWS EOL* ( codeBlock | expression )  ;
+matchCases : matchCase (eos EOL* matchCase)* eos?;
+matchCase : pattern ifModifier? EOL* RIGHT_RIGHT_ARROWS EOL* ( codeBlock | expression )  ;
 
 // GRAMMAR OF A CONTROL TRANSFER STATEMENT
 
@@ -201,10 +211,12 @@ importType : typeName importTypeAsClause?;
 
 constantDeclaration
   : KEYWORD_CONST patternInitializers
+  | KEYWORD_CONST LCURLY EOL* documentedPatternInitializer (eos EOL* documentedPatternInitializer)* eos? EOL* RCURLY
   ;
+
+//FIXME will has error in golang parser if remove the patternInitializers
 patternInitializers
-  : patternInitializer (eov EOL*  patternInitializer)*
-  | LCURLY EOL* documentedPatternInitializer (eov EOL* documentedPatternInitializer)* eov? EOL* RCURLY
+  : patternInitializer
   ;
 
 documentedPatternInitializer : (document EOL)? (attributes EOL)? patternInitializer;
@@ -218,7 +230,8 @@ initializer : assignmentOperator EOL* expression  ;
 
 variableDeclaration
   : KEYWORD_VAR patternInitializers
-  | identifierPattern COLON_EQUAL expression
+  | pattern COLON_EQUAL expression
+  | KEYWORD_VAR LCURLY EOL* documentedPatternInitializer (eos EOL* documentedPatternInitializer)* eos? EOL* RCURLY
   ;
 
 // GRAMMAR OF A TYPE ALIAS DECLARATION
@@ -260,21 +273,23 @@ functionParameter
 
 enumDeclaration
   : KEYWORD_ENUM enumName genericParameterClause? (EOL* typeInheritanceClause)? EOL* enumBody
+  | KEYWORD_TYPE enumName assignmentOperator KEYWORD_ENUM genericParameterClause? (EOL* typeInheritanceClause)? EOL* enumBody
   ;
 
 enumBody : LCURLY (followingDocument)? (EOL* enumMembers)? EOL* RCURLY ;
 
 enumName: typeName;
-enumMembers : enumMember (eovWithDocument EOL* enumMember)* eovWithDocument?;
+enumMembers : enumMember (eosWithDocument EOL* enumMember)* eosWithDocument?;
 
 enumMember
  : (document EOL)? (attributes EOL)? declarationIdentifier attributes? (EOL* initializer)?
- | freeFloatingDocument
+ | floatingStatement
  ;
 
 // GRAMMAR OF A STRUCTURE DECLARATION
 structDeclaration
- : KEYWORD_TYPE structName genericParameterClause? structType
+ : (KEYWORD_TYPE | KEYWORD_STRUCT) structName genericParameterClause? structType
+ | KEYWORD_TYPE structName assignmentOperator KEYWORD_STRUCT genericParameterClause? structType
  ;
 
 structName : typeName;
@@ -298,7 +313,7 @@ structMember
  | typeAliasDeclaration
  | structMemberDeclaration
  )
- | freeFloatingDocument
+ | floatingStatement
  ;
 
 structMemberDeclaration
@@ -308,7 +323,9 @@ structMemberDeclaration
 // GRAMMAR OF A INTERFACE DECLARATION
 
 interfaceDeclaration
-  : KEYWORD_INTERFACE interfaceName genericParameterClause? interfaceType;
+  : KEYWORD_INTERFACE interfaceName genericParameterClause? interfaceType
+  | KEYWORD_TYPE interfaceName assignmentOperator KEYWORD_INTERFACE genericParameterClause? interfaceType
+  ;
 
 interfaceName : typeName ;
 interfaceType : (EOL* typeInheritanceClause)? EOL* interfaceBody;
@@ -324,7 +341,7 @@ interfaceMember
  ( typeAliasDeclaration
  | interfaceMethodDeclaration
  )
- | freeFloatingDocument
+ | floatingStatement
  ;
 
 // GRAMMAR OF A INTERFACE METHOD DECLARATION
@@ -346,9 +363,11 @@ pattern
  : wildcardPattern typeAnnotation?
  | identifierPattern typeAnnotation?
  | tuplePattern typeAnnotation?
- //| enum_value_pattern
+ | arrayPattern typeAnnotation?
+ | type_ attributes?
+ | enumValuePattern
  | optionalPattern
- | KEYWORD_IS type_
+ | BANG? KEYWORD_IS type_
  | pattern KEYWORD_AS type_
  | expressionPattern
  ;
@@ -367,11 +386,17 @@ tuplePattern : LPAREN tuplePatternElementList? RPAREN  ;
 tuplePatternElementList
 	:	tuplePatternElement (COMMA tuplePatternElement)*
 	;
-tuplePatternElement : pattern  ;
+tuplePatternElement : pattern | ELLIPSIS ;
+
+arrayPattern : LBRACK arrayPatternElements? RBRACK;
+arrayPatternElements
+    : arrayPatternElement (COMMA arrayPatternElement)*
+    ;
+arrayPatternElement: pattern | ELLIPSIS;
 
 // GRAMMAR OF AN ENUMERATION CASE PATTERN
 
-//enum_value_pattern : typeIdentifier? DOT enum_case_name tuple_pattern? ;
+enumValuePattern : typeIdentifier? DOT declarationIdentifier tuplePattern? ;
 
 // GRAMMAR OF AN OPTIONAL PATTERN
 optionalPattern : identifierPattern QUESTION ;
@@ -403,9 +428,11 @@ attributes : attribute (EOL? attribute)* ;
 // Expressions
 
 // GRAMMAR OF AN EXPRESSION
-expression : prefixExpression binaryExpressions? ;
+expression
+    : prefixExpression binaryExpressions?
+    ;
 
-expressions : expression (eov EOL* expression)* eov?;
+//expressions : expression (eov EOL* expression)* eov?;
 
 // GRAMMAR OF A PREFIX EXPRESSION
 prefixExpression
@@ -416,19 +443,37 @@ prefixExpression
 // GRAMMAR OF A BINARY EXPRESSION
 binaryExpression
   : binaryOperator prefixExpression
-  | assignmentOperator prefixExpression
-  | conditionalOperator prefixExpression
-  | typeCastingOperator
+  //| COMMA prefixExpression // comma-expression / tuple-expression
+  //| assignmentOperator prefixExpression
+  | conditionalOperator prefixExpression // conditional-expression
+  | inOperator prefixExpression  // in-expression
+  | ifOperator prefixExpression // if-expression
+  //| typeCastingOperator // type-casting-expression
+  | infixCallOperator prefixExpression // infix-call-expression
+  ;
+
+prefixCallOperator
+    : labelIdentifier
+    ;
+
+infixCallOperator
+    : VALUE_IDENTIFIER
   ;
 
 binaryExpressions : binaryExpression+ ;
 
+inOperator
+    : BANG KEYWORD_IN | KEYWORD_IN
+    ;
+
 // GRAMMAR OF A CONDITIONAL OPERATOR
 conditionalOperator : QUESTION expression COLON ;
+ifOperator: KEYWORD_IF expression KEYWORD_ELSE;
 
 // GRAMMAR OF A TYPE_CASTING OPERATOR
+// is pattern
 typeCastingOperator
-  : KEYWORD_IS type_
+  : (BANG KEYWORD_IS | KEYWORD_IS) (type_ | pattern)
   | KEYWORD_AS type_
   ;
 
@@ -438,11 +483,12 @@ primaryExpression
  | declarationIdentifier genericArgumentClause?
  | typeIdentifier DOT declarationIdentifier genericArgumentClause?
  | closureExpression
+ | tupleLiteralExpression
  | parenthesizedExpression
- | tupleExpression
  | implicitMemberExpression
  | wildcardExpression
  | structConstructionExpression
+ | ELLIPSIS
  //| key_path_expression
  ;
 
@@ -476,7 +522,7 @@ arrayLiteralItems
   : arrayLiteralItem (eov EOL* arrayLiteralItem)* eov?
  ;
  
-arrayLiteralItem : expression ;
+arrayLiteralItem : expression | ELLIPSIS ;
 
 mapLiteral
    : LCURLY (EOL* mapLiteralItems)? EOL* RCURLY
@@ -517,9 +563,14 @@ structConstructionExpression
     : typeIdentifier functionCallSuffix
     ;
 
+//matchExpression : KEYWORD_MATCH expression EOL* LCURLY (EOL* matchExprCases)? EOL* RCURLY;
+matchExprSuffix : KEYWORD_MATCH EOL* LCURLY (EOL* matchExprCases)? EOL* RCURLY;
+matchExprCases : matchExprCase (eos EOL* matchExprCase)* eos?;
+matchExprCase : pattern EOL* RIGHT_RIGHT_ARROWS EOL* expression;
+
 // GRAMMAR OF A CLOSURE EXPRESSION
 closureExpression
-    : LCURLY statements RCURLY
+    : LCURLY EOL* statements EOL* RCURLY
     | LCURLY closureParameters EOL* RIGHT_ARROW (EOL* type_)? EOL* statements RCURLY
     ;
 
@@ -545,7 +596,7 @@ parenthesizedExpression
       ) EOL* RPAREN ;
 // GRAMMAR OF A TUPLE EXPRESSION
 
-tupleExpression
+tupleLiteralExpression
  : LPAREN RPAREN
  | LPAREN tupleElement (COMMA tupleElement)+ RPAREN
  ;
@@ -553,6 +604,7 @@ tupleExpression
 tupleElement
  : expression
  | labelIdentifier COLON expression
+ | ELLIPSIS
  ;
 
 // GRAMMAR OF A WILDCARD EXPRESSION
@@ -566,16 +618,19 @@ suffixExpression
     : functionCallSuffix
     | explicitMemberSuffix
     | subscriptSuffix
+    | matchExprSuffix
+    | typeCastingOperator
     ;
 
-explicitMemberSuffix:
-	DOT (
-		PURE_DECIMAL_DIGITS
+explicitMemberSuffix
+    : DOT
+		 ( DECIMAL_LITERAL
 		| identifier (
 			genericArgumentClause
 			| LPAREN argumentNames RPAREN
 		)?
-	);
+	     )
+	;
 
 subscriptSuffix: LBRACK functionCallArguments RBRACK;
 
@@ -586,9 +641,8 @@ functionCallSuffix
 	;
 
 functionCallArgumentClause
- : LPAREN RPAREN
- | LPAREN functionCallArguments RPAREN
- //| expression
+ : LPAREN EOL* RPAREN
+ | LPAREN EOL* functionCallArguments EOL* RPAREN
  ;
 
 functionCallArguments : functionCallArgument ( COMMA functionCallArgument )* ;
@@ -596,8 +650,8 @@ functionCallArguments : functionCallArgument ( COMMA functionCallArgument )* ;
 functionCallArgument
  : expression
  | labelIdentifier COLON expression
- | operator
- | labelIdentifier COLON operator
+ //| operator
+ //| labelIdentifier COLON operator
  ;
 
 trailingClosures:
@@ -615,9 +669,12 @@ argumentName : labelIdentifier COLON ;
 type_
  : basicType
  | functionType
- | type_ BANG
- | type_ QUESTION
- | type_ ELLIPSIS
+ | type_ BANG     // unit
+ | type_ QUESTION // optional
+ | type_ STAR     // reference
+ | type_ PLUS     // public  RESERVED
+ | type_ MINUS    // private RESERVED
+ | type_ ELLIPSIS // type list
  ;
 
 basicType
@@ -737,7 +794,7 @@ keywordAsIdentifierInDeclarations
     | KEYWORD_ENUM
     | KEYWORD_FALSE
     | KEYWORD_FUNC
-    | KEYWORD_IF
+    //| KEYWORD_IF
     | KEYWORD_IMPORT
     | KEYWORD_IN
     | KEYWORD_INTERFACE
@@ -765,7 +822,7 @@ keywordAsIdentifierInLabels
     | KEYWORD_FALSE
     | KEYWORD_FOR
     | KEYWORD_FUNC
-    | KEYWORD_IF
+    //| KEYWORD_IF
     | KEYWORD_ELSE
     | KEYWORD_IMPORT
     | KEYWORD_IN
@@ -885,11 +942,11 @@ prefixOperator
  the ++ operator in a++.b is treated as a postfix unary operator (a++ .b
  rather than a ++ .b)."
  */
-postfixOperator: PLUS_PLUS | MINUS_MINUS;
+postfixOperator: PLUS_PLUS | MINUS_MINUS | ELLIPSIS;
 
 operator
   : operator_head     operator_characters?
-  | dot_operator_head (dot_operator_character)*
+  | dot_operator_head (dot_operator_character)+
   ;
 
 operator_characters: (

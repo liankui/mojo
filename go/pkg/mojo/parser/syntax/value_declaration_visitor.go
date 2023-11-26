@@ -65,12 +65,9 @@ func (v *ValueDeclarationVisitor) VisitVariableDeclaration(ctx *VariableDeclarat
 }
 
 func (v *ValueDeclarationVisitor) VisitPatternInitializers(ctx *PatternInitializersContext) interface{} {
-	initializerCtxes := ctx.AllPatternInitializer()
 	var decls []*lang.ValueDecl
-	for _, c := range initializerCtxes {
-		if decl, ok := c.Accept(v).(*lang.ValueDecl); ok && decl != nil {
-			decls = append(decls, decl)
-		}
+	if decl, ok := ctx.PatternInitializer().Accept(v).(*lang.ValueDecl); ok && decl != nil {
+		decls = append(decls, decl)
 	}
 	if len(decls) > 0 {
 		return decls
@@ -115,7 +112,7 @@ func (v *ValueDeclarationVisitor) VisitIdentifierPattern(ctx *IdentifierPatternC
 }
 
 func (v *ValueDeclarationVisitor) VisitEnumMember(ctx *EnumMemberContext) interface{} {
-	if freeFloatingDocumentCtx := ctx.FreeFloatingDocument(); freeFloatingDocumentCtx != nil {
+	if freeFloatingDocumentCtx := ctx.FloatingStatement(); freeFloatingDocumentCtx != nil {
 		return GetFreeFloatingDocument(freeFloatingDocumentCtx)
 	}
 

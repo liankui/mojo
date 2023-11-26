@@ -1,7 +1,7 @@
-// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
+// Code generated from MojoParser.g4 by ANTLR 4.13.0. DO NOT EDIT.
 
 package syntax // MojoParser
-import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
+import "github.com/antlr4-go/antlr/v4"
 
 // A complete Visitor for a parse tree produced by MojoParser.
 type MojoParserVisitor interface {
@@ -13,8 +13,14 @@ type MojoParserVisitor interface {
 	// Visit a parse tree produced by MojoParser#statement.
 	VisitStatement(ctx *StatementContext) interface{}
 
-	// Visit a parse tree produced by MojoParser#freeFloatingDocument.
-	VisitFreeFloatingDocument(ctx *FreeFloatingDocumentContext) interface{}
+	// Visit a parse tree produced by MojoParser#ifModifier.
+	VisitIfModifier(ctx *IfModifierContext) interface{}
+
+	// Visit a parse tree produced by MojoParser#whileModifier.
+	VisitWhileModifier(ctx *WhileModifierContext) interface{}
+
+	// Visit a parse tree produced by MojoParser#floatingStatement.
+	VisitFloatingStatement(ctx *FloatingStatementContext) interface{}
 
 	// Visit a parse tree produced by MojoParser#statements.
 	VisitStatements(ctx *StatementsContext) interface{}
@@ -268,6 +274,18 @@ type MojoParserVisitor interface {
 	// Visit a parse tree produced by MojoParser#tuplePatternElement.
 	VisitTuplePatternElement(ctx *TuplePatternElementContext) interface{}
 
+	// Visit a parse tree produced by MojoParser#arrayPattern.
+	VisitArrayPattern(ctx *ArrayPatternContext) interface{}
+
+	// Visit a parse tree produced by MojoParser#arrayPatternElements.
+	VisitArrayPatternElements(ctx *ArrayPatternElementsContext) interface{}
+
+	// Visit a parse tree produced by MojoParser#arrayPatternElement.
+	VisitArrayPatternElement(ctx *ArrayPatternElementContext) interface{}
+
+	// Visit a parse tree produced by MojoParser#enumValuePattern.
+	VisitEnumValuePattern(ctx *EnumValuePatternContext) interface{}
+
 	// Visit a parse tree produced by MojoParser#optionalPattern.
 	VisitOptionalPattern(ctx *OptionalPatternContext) interface{}
 
@@ -298,20 +316,29 @@ type MojoParserVisitor interface {
 	// Visit a parse tree produced by MojoParser#expression.
 	VisitExpression(ctx *ExpressionContext) interface{}
 
-	// Visit a parse tree produced by MojoParser#expressions.
-	VisitExpressions(ctx *ExpressionsContext) interface{}
-
 	// Visit a parse tree produced by MojoParser#prefixExpression.
 	VisitPrefixExpression(ctx *PrefixExpressionContext) interface{}
 
 	// Visit a parse tree produced by MojoParser#binaryExpression.
 	VisitBinaryExpression(ctx *BinaryExpressionContext) interface{}
 
+	// Visit a parse tree produced by MojoParser#prefixCallOperator.
+	VisitPrefixCallOperator(ctx *PrefixCallOperatorContext) interface{}
+
+	// Visit a parse tree produced by MojoParser#infixCallOperator.
+	VisitInfixCallOperator(ctx *InfixCallOperatorContext) interface{}
+
 	// Visit a parse tree produced by MojoParser#binaryExpressions.
 	VisitBinaryExpressions(ctx *BinaryExpressionsContext) interface{}
 
+	// Visit a parse tree produced by MojoParser#inOperator.
+	VisitInOperator(ctx *InOperatorContext) interface{}
+
 	// Visit a parse tree produced by MojoParser#conditionalOperator.
 	VisitConditionalOperator(ctx *ConditionalOperatorContext) interface{}
+
+	// Visit a parse tree produced by MojoParser#ifOperator.
+	VisitIfOperator(ctx *IfOperatorContext) interface{}
 
 	// Visit a parse tree produced by MojoParser#typeCastingOperator.
 	VisitTypeCastingOperator(ctx *TypeCastingOperatorContext) interface{}
@@ -367,6 +394,15 @@ type MojoParserVisitor interface {
 	// Visit a parse tree produced by MojoParser#structConstructionExpression.
 	VisitStructConstructionExpression(ctx *StructConstructionExpressionContext) interface{}
 
+	// Visit a parse tree produced by MojoParser#matchExprSuffix.
+	VisitMatchExprSuffix(ctx *MatchExprSuffixContext) interface{}
+
+	// Visit a parse tree produced by MojoParser#matchExprCases.
+	VisitMatchExprCases(ctx *MatchExprCasesContext) interface{}
+
+	// Visit a parse tree produced by MojoParser#matchExprCase.
+	VisitMatchExprCase(ctx *MatchExprCaseContext) interface{}
+
 	// Visit a parse tree produced by MojoParser#closureExpression.
 	VisitClosureExpression(ctx *ClosureExpressionContext) interface{}
 
@@ -382,8 +418,8 @@ type MojoParserVisitor interface {
 	// Visit a parse tree produced by MojoParser#parenthesizedExpression.
 	VisitParenthesizedExpression(ctx *ParenthesizedExpressionContext) interface{}
 
-	// Visit a parse tree produced by MojoParser#tupleExpression.
-	VisitTupleExpression(ctx *TupleExpressionContext) interface{}
+	// Visit a parse tree produced by MojoParser#tupleLiteralExpression.
+	VisitTupleLiteralExpression(ctx *TupleLiteralExpressionContext) interface{}
 
 	// Visit a parse tree produced by MojoParser#tupleElement.
 	VisitTupleElement(ctx *TupleElementContext) interface{}
