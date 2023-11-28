@@ -1,4 +1,4 @@
-FROM centos:8
+FROM alpine:3.18.4
 
 ADD {{.PackageName}}-{{ToKebab .Interface.ServerName}} /{{.PackageName}}-{{ToKebab .Interface.ServerName}}
 
