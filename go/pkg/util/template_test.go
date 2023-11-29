@@ -1,7 +1,7 @@
 package util
 
 import (
-	"io/ioutil"
+	"io"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,7 +14,7 @@ func TestApplyTemplate(t *testing.T) {
 		FuncMap)
 
 	if assert.NoError(t, err) {
-		str, err := ioutil.ReadAll(out)
+		str, err := io.ReadAll(out)
 		assert.NoError(t, err)
 
 		assert.Equal(t, "one, two and three.", string(str))

@@ -215,7 +215,7 @@ func contextValuesToHttpHeaders(keys []string) http.RequestFunc {
 	// error and attempt to decode the specific error message from the response
 	// body. Primarily useful in a client.
 	func DecodeHTTP{{ToCamel $method.Name}}Response(_ context.Context, r *http.Response) (interface{}, error) {
-		buf, err := ioutil.ReadAll(r.Body)
+		buf, err := io.ReadAll(r.Body)
 		if err != nil {
 			return nil, errors.Wrap(err, "cannot read http body")
 		}

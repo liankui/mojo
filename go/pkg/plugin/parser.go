@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"io/ioutil"
+	"os"
 	"path"
 
 	"github.com/mojo-lang/core/go/pkg/mojo/core"
@@ -37,7 +37,7 @@ func ParseFile(p interface{}, ctx context.Context, fileName string) (*lang.Sourc
 		var content []byte
 		f := ContextFs(ctx)
 		if f == nil {
-			content, err = ioutil.ReadFile(fileName)
+			content, err = os.ReadFile(fileName)
 		} else {
 			content, err = fs.ReadFile(f, fileName)
 		}

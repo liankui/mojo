@@ -60,7 +60,7 @@ func TestRenderPrevEndpoints(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	endpointsBytes, err := ioutil.ReadAll(endpoints)
+	endpointsBytes, err := io.ReadAll(endpoints)
 	if err != nil {
 		t.Fatal(err)
 	}

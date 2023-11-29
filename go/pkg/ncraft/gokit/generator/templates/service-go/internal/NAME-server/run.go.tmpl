@@ -26,7 +26,7 @@ import (
     _ "go.uber.org/automaxprocs"
 
     nclient "github.com/ncraft-io/ncraft-gokit/pkg/client"
-    "github.com/ncraft-io/ncraft/go/pkg/ncraft/logs"
+    "github.com/chaos-io/chaos/logs"
     {{if .Interface.HasSubscription}}"github.com/ncraft-io/ncraft/go/pkg/ncraft/messaging"
     _ "github.com/ncraft-io/ncraft/go/pkg/ncraft/messaging/nats"{{end}}
     "github.com/ncraft-io/ncraft-gokit/pkg/metrics"

@@ -76,7 +76,7 @@ func TestServerMethsTempl(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	genBytes, err := ioutil.ReadAll(gen)
+	genBytes, err := io.ReadAll(gen)
 	const expected = `
 		// ProtoMethod implements Interface.
 		func (s protoInterface) ProtoMethod(ctx context.Context, in *pb.RequestMessage) (*pb.ResponseMessage, error){
@@ -134,7 +134,7 @@ func TestApplyServerTempl(t *testing.T) {
 	te, err := gengokit.NewData(sd, conf)
 
 	gen, err := applyServerTmpl(te)
-	genBytes, err := ioutil.ReadAll(gen)
+	genBytes, err := io.ReadAll(gen)
 	expected := `
 		package handlers
 
@@ -527,7 +527,7 @@ func renderInterface(svc *svcdef.Interface, prev string, data *gengokit.Data) (s
 		return "", err
 	}
 
-	nextBytes, err := ioutil.ReadAll(next)
+	nextBytes, err := io.ReadAll(next)
 	if err != nil {
 		return "", err
 	}

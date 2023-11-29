@@ -3,7 +3,6 @@ package generator
 import (
 	"bytes"
 	"io"
-	"io/ioutil"
 	"strings"
 
 	"github.com/mojo-lang/core/go/pkg/logs"
@@ -146,7 +145,7 @@ func generateTemplateFile(tmplPath string, actualPath string, ds *data.Service, 
 		}
 	}
 
-	codeBytes, err := ioutil.ReadAll(genCode)
+	codeBytes, err := io.ReadAll(genCode)
 	if err != nil {
 		return nil, err
 	}

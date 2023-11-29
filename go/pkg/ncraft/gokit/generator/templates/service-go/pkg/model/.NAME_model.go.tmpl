@@ -1,0 +1,87 @@
+package model
+
+import (
+	"context"
+	"sync"
+
+	"github.com/chaos-io/chaos/db"
+	"github.com/chaos-io/chaos/logs"
+
+	{{index .Go.ImportedTypePaths 0}}
+)
+
+var {{ToLowerCamel .Interface.ServerName}}Model *{{.Interface.ServerName}}Model
+var {{ToLowerCamel .Interface.ServerName}}ModelOnce sync.Once
+
+type {{.Interface.ServerName}}Model struct {
+	DB *db.DB
+}
+
+func Get{{.Interface.ServerName}}Model() *{{.Interface.ServerName}}Model {
+	{{ToLowerCamel .Interface.ServerName}}ModelOnce.Do(func() {
+		{{ToLowerCamel .Interface.ServerName}}Model = New{{.Interface.ServerName}}Model()
+	})
+
+	return {{ToLowerCamel .Interface.ServerName}}Model
+}
+
+func New{{.Interface.ServerName}}Model() *{{.Interface.ServerName}}Model {
+	m := &{{.Interface.ServerName}}Model{DB: initDB()}
+	if !m.DB.Config.DisableAutoMigrate || !d.Migrator().HasTable(&{{.Go.PackageName}}.{{.Interface.ServerName}}{}) {
+		if err := d.AutoMigrate(&{{.Go.PackageName}}.{{.Interface.ServerName}}{}); err != nil {
+			logs.Error("Init {{.Interface.ServerName}}Model model err: ", err)
+			panic(err)
+		}
+	}
+
+	return m
+}
+
+func (m *{{.Interface.ServerName}}Model) Create(ctx context.Context, {{ToLowerCamel .Interface.ServerName}} *{{.Go.PackageName}}.{{.Interface.ServerName}}) (int64, error) {
+	result := m.DB.WithContext(ctx).Create({{ToLowerCamel .Interface.ServerName}})
+	return result.RowsAffected, result.Error
+}
+
+func (m *{{.Interface.ServerName}}Model) Get(ctx context.Context, id string) (*{{.Go.PackageName}}.{{.Interface.ServerName}}, error) {
+	{{ToLowerCamel .Interface.ServerName}} := &{{.Go.PackageName}}.{{.Interface.ServerName}}{}
+	return {{ToLowerCamel .Interface.ServerName}}, m.DB.WithContext(ctx).First({{ToLowerCamel .Interface.ServerName}}, "id = ?", id).Error
+}
+
+func (m *{{.Interface.ServerName}}Model) Delete(ctx context.Context, id string) (int64, error) {
+	result := m.DB.WithContext(ctx).Where("id = ?", id).Delete(&{{.Go.PackageName}}.{{.Interface.ServerName}}{})
+	return result.RowsAffected, result.Error
+}
+
+func (m *{{.Interface.ServerName}}Model) Update(ctx context.Context, {{ToLowerCamel .Interface.ServerName}} *{{.Go.PackageName}}.{{.Interface.ServerName}}) (int64, error) {
+	result := m.DB.WithContext(ctx).Updates({{ToLowerCamel .Interface.ServerName}})
+	return result.RowsAffected, result.Error
+}
+
+func (m *{{.Interface.ServerName}}Model) List(ctx context.Context, filter string, condition ...string) ([]*{{.Go.PackageName}}.{{.Interface.ServerName}}, error) {
+	var {{ToLowerCamel .Interface.ServerName}} []*{{.Go.PackageName}}.{{.Interface.ServerName}}
+
+	tx := m.DB.WithContext(ctx)
+	// todo add condition
+
+	return {{ToLowerCamel .Interface.ServerName}}, tx.Find(&{{ToLowerCamel .Interface.ServerName}}).Error
+}
+
+func (m *{{.Interface.ServerName}}Model) BatchCreate(ctx context.Context, {{ToLowerCamel .Interface.ServerName}} ...*{{.Go.PackageName}}.{{.Interface.ServerName}}) (int64, error) {
+	result := m.DB.WithContext(ctx).CreateInBatches({{ToLowerCamel .Interface.ServerName}}, len({{ToLowerCamel .Interface.ServerName}}))
+	return result.RowsAffected, result.Error
+}
+
+func (m *{{.Interface.ServerName}}Model) BatchGet(ctx context.Context, ids ...string) ([]*{{.Go.PackageName}}.{{.Interface.ServerName}}, error) {
+	var {{ToLowerCamel .Interface.ServerName}} []*{{.Go.PackageName}}.{{.Interface.ServerName}}
+	return {{ToLowerCamel .Interface.ServerName}}, m.DB.WithContext(ctx).Find(&{{ToLowerCamel .Interface.ServerName}}, "id = ?", ids).Error
+}
+
+func (m *{{.Interface.ServerName}}Model) BatchDelete(ctx context.Context, ids ...string) (int64, error) {
+	result := m.DB.WithContext(ctx).Where("id = ?", ids).Delete(&{{.Go.PackageName}}.{{.Interface.ServerName}}{})
+	return result.RowsAffected, result.Error
+}
+
+func (m *{{.Interface.ServerName}}Model) BatchUpdate(ctx context.Context, {{ToLowerCamel .Interface.ServerName}} []*{{.Go.PackageName}}.{{.Interface.ServerName}}) (int64, error) {
+	result := m.DB.WithContext(ctx).Updates({{ToLowerCamel .Interface.ServerName}})
+	return result.RowsAffected, result.Error
+}

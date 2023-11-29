@@ -3,7 +3,6 @@ package _go
 import (
 	"go/format"
 	"io"
-	"io/ioutil"
 	"strings"
 
 	"github.com/pmezard/go-difflib/difflib"
@@ -77,7 +76,7 @@ func FormatCodeBytes(code []byte) []byte {
 }
 
 func FormatCode(reader io.Reader) ([]byte, error) {
-	if bytes, err := ioutil.ReadAll(reader); err != nil {
+	if bytes, err := io.ReadAll(reader); err != nil {
 		return nil, err
 	} else {
 		formatted, err := format.Source(bytes)

@@ -24,7 +24,7 @@ var ServerDecodeTemplate = `
 			reader = r.Body
 		}
 
-		buf, err := ioutil.ReadAll(reader)
+		buf, err := io.ReadAll(reader)
 		if err != nil {
 			return nil, nhttp.WrapError(err, 400, "cannot read body of http request")
 		}

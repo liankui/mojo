@@ -7,10 +7,10 @@ package main
 
 import (
 	"flag"
-    "github.com/ncraft-io/ncraft/go/pkg/ncraft/config"
-    "github.com/ncraft-io/ncraft/go/pkg/ncraft/logs"
 
     nserver "github.com/ncraft-io/ncraft-gokit/pkg/server"
+    "github.com/chaos-io/chaos/config"
+    "github.com/chaos-io/chaos/logs"
 
 	// This Service
 	"{{.Go.RepositoryPath -}}/internal/{{ToKebab .Interface.ServerName}}"
@@ -49,5 +49,6 @@ func main() {
     } else {
         logs.Infow("starting {{.Interface.ServerName}}", "gitHash", gitHash, "gitBranch", gitBranch, "buildTime", buildTime)
     }
+
 	server.Run(conf)
 }

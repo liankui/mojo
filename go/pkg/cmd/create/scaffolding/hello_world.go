@@ -1,7 +1,7 @@
 package scaffolding
 
 import (
-	"io/ioutil"
+	"os"
 	path2 "path"
 
 	"github.com/mojo-lang/core/go/pkg/mojo/core"
@@ -37,7 +37,7 @@ func GenerateHelloWorldFiles(output string) error {
 		if err := core.CreateDir(path); err != nil {
 			return err
 		}
-		if err := ioutil.WriteFile(f.Name, []byte(f.Content), 0666); err != nil {
+		if err := os.WriteFile(f.Name, []byte(f.Content), 0666); err != nil {
 			return err
 		}
 	}

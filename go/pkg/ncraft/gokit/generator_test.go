@@ -93,7 +93,7 @@ func TestApplyTemplateFromPath(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	endCode, err := ioutil.ReadAll(end)
+	endCode, err := io.ReadAll(end)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -289,7 +289,7 @@ func testGenerateResponseFile(templPath string, data *gengokit.Data, prev io.Rea
 	}
 
 	// read the code off the io.Reader
-	codeBytes, err := ioutil.ReadAll(code)
+	codeBytes, err := io.ReadAll(code)
 	if err != nil {
 		return "", err
 	}

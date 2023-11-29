@@ -3,7 +3,7 @@ package scaffolding
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"os"
 	path2 "path"
 
 	"github.com/mojo-lang/core/go/pkg/mojo/core"
@@ -77,7 +77,7 @@ func (g *Generator) Generate(data *Data, output string) error {
 			if err := core.CreateDir(path); err != nil {
 				return err
 			}
-			if err := ioutil.WriteFile(name, []byte(f.Content), 0666); err != nil {
+			if err := os.WriteFile(name, []byte(f.Content), 0666); err != nil {
 				return err
 			}
 		}

@@ -59,7 +59,7 @@ func hasSuffix(file string, suffixes ...string) bool {
 
 func IsAllGeneratedFile(path string) bool {
 	if core.IsExist(path) {
-		content, err := ioutil.ReadFile(path)
+		content, err := os.ReadFile(path)
 		if err != nil {
 			return false
 		}
