@@ -56,6 +56,8 @@ const HandlerMethods = `
 	{{range $i := $te.Interface.Methods}}
 		// {{GoName $i.Name}} implements Interface.
 		func (s {{ToLowerCamel $te.Interface.ServerName}}) {{GoName $i.Name}}(ctx context.Context, in *{{GoPackageName $i.Request.Name}}.{{GoName $i.Request.Name}}) (*{{GoPackageName $i.Response.Name}}.{{GoName $i.Response.Name}}, error){
+			logs.Infow("{{GoName $i.Name}}", "request", in)
+
 			resp := &{{GoPackageName $i.Response.Name}}.{{GoName $i.Response.Name}}{
 				{{range $j := $i.Response.Fields -}}
 					// {{GoName $j.Name}}:

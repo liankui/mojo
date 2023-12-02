@@ -33,7 +33,7 @@ func NewEntityModel() *EntityModel {
 	m := &EntityModel{DB: initDB()}
 	if !m.DB.Config.DisableAutoMigrate || !d.Migrator().HasTable(&data.Entity{}) {
 		if err := d.AutoMigrate(&data.Entity{}); err != nil {
-			logs.Error("Init Entity model err: ", err)
+			logs.Error("Init Entity model error: ", err)
 			panic(err)
 		}
 	}
