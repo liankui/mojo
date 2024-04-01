@@ -4,7 +4,7 @@ const Middlewares = `
 package handlers
 
 import (
-	"github.com/ncraft-io/ncraft-gokit/pkg/middleware"
+	"github.com/chaos-io/chaos/gokit/middleware"
 	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 	"github.com/go-kit/kit/tracing/opentracing"
 	stdopentracing "github.com/opentracing/opentracing-go"
@@ -12,7 +12,6 @@ import (
 	{{range $i := .Go.ImportedTypePaths}}
 	"{{$i}}"
 	{{- end}}
-
 	"{{.Go.RepositoryPath -}}/pkg/{{ToKebab .Interface.Name}}-service/svc"
 
 	// this service api
