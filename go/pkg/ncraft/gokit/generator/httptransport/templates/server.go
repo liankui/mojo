@@ -88,6 +88,7 @@ package svc
 import (
 	"bytes"
 	"encoding/json"
+	"context"
 	"compress/gzip"
 	"fmt"
 	"io/ioutil"
@@ -97,13 +98,11 @@ import (
 	"strings"
 	"io"
 
-	"context"
-
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/tracing/opentracing"
 	"github.com/gorilla/mux"
 	"github.com/json-iterator/go"
-	"github.com/ncraft-io/ncraft/go/pkg/ncraft/logs"
+	"github.com/chaos-io/chaos/logs"
 	"github.com/pkg/errors"
 
 	httptransport "github.com/go-kit/kit/transport/http"
@@ -174,7 +173,7 @@ func RegisterHttpHandler(router *mux.Router, endpoints Endpoints, tracer stdopen
 					EncodeHTTP{{ToCamel $method.Name}}Response,{{else}}
 					EncodeHTTPGenericResponse,{{end}}
 					addTracerOption("{{$method.Name}}")...,
-					//append(serverOptions, httptransport.ServerBefore(opentracing.HTTPToContext(tracer, "{{ToSnake $method.Name}}", logger)))...,
+					// append(serverOptions, httptransport.ServerBefore(opentracing.HTTPToContext(tracer, "{{ToSnake $method.Name}}", logger)))...,
 			))
 		{{- end}}
 	{{- end}}

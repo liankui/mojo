@@ -6,7 +6,7 @@ package model
 import (
 	"sync"
 
-	"github.com/ncraft-io/ncraft/go/pkg/ncraft/logs"
+	"github.com/chaos-io/chaos/logs"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
