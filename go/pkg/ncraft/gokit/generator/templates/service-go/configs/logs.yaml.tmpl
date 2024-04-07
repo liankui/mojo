@@ -1,11 +1,14 @@
 logs:
   level: debug
-  encode: console #json or console
+  encode: console # json or console
+  # output: file
   initFields:
     package: {{.PackageFullName}}
     server: {{ToKebab .Interface.ServerName}}
     version: {{.Version}}
   file:
+    # path: ./logs/app.log
     maxSize: 100
     maxBackups: 10
     maxAge: 28
+    # encode: console
