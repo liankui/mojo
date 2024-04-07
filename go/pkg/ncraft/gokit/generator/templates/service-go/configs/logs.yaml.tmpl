@@ -7,8 +7,9 @@ logs:
     server: {{ToKebab .Interface.ServerName}}
     version: {{.Version}}
   file:
-    # path: ./logs/app.log
+    path: ./logs/app.log
     maxSize: 100
     maxBackups: 10
     maxAge: 28
-    # encode: console
+    encode: console
+    # Compress: false
