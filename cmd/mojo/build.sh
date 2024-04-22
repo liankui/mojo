@@ -1,5 +1,8 @@
 #!/bin/bash
 
+PWD=$(cd "$(dirname "$0")" && pwd)
+cd "$PWD" || exit
+
 case "$1" in
 "linux" | "windows" | "darwin") goos="$1" ;;
 "mac") goos="darwin" ;;
