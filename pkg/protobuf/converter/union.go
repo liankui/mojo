@@ -13,8 +13,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/protobuf/decompiler"
 )
 
-type Union struct {
-}
+type Union struct{}
 
 func init() {
 	RegisterNominalPlugin(&Union{})

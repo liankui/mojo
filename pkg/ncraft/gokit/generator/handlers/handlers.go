@@ -158,7 +158,6 @@ func (h *handler) Render(alias string, service *data.Service) (io.Reader, error)
 func (h *handler) buffer() (*bytes.Buffer, error) {
 	code := bytes.NewBuffer(nil)
 	err := printer.Fprint(code, h.fileSet, h.ast)
-
 	if err != nil {
 		return nil, err
 	}

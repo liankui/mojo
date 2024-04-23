@@ -12,8 +12,7 @@ type SchemaCompiler interface {
 	Compile(ctx context.Context, nominalType *lang.NominalType) (*openapi.ReferenceableSchema, error)
 }
 
-type ReferenceCompiler struct {
-}
+type ReferenceCompiler struct{}
 
 // FilterSchema
 // filter ignore types

@@ -21,9 +21,11 @@ var goStdTypeNames = map[string]bool{
 	"string":  true,
 }
 
-var importedMessages map[string]string
-var importedMessagesInService map[string]map[string]bool
-var importedMessagesOnce sync.Once
+var (
+	importedMessages          map[string]string
+	importedMessagesInService map[string]map[string]bool
+	importedMessagesOnce      sync.Once
+)
 
 func RegisterMessageGoPackageName(service string, msg string, pkg string) (existed bool) {
 	importedMessagesOnce.Do(func() {

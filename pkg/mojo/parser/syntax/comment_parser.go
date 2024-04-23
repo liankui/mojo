@@ -7,8 +7,7 @@ import (
 	"github.com/mojo-lang/lang/go/pkg/mojo/lang"
 )
 
-type CommentParser struct {
-}
+type CommentParser struct{}
 
 func (c CommentParser) Parse(stream *antlr.CommonTokenStream) []*lang.Comment {
 	var comments []*lang.Comment

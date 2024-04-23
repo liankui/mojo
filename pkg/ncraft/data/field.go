@@ -20,11 +20,9 @@ type Field struct {
 	Extensions map[string]interface{}
 }
 
-type GoField struct {
-}
+type GoField struct{}
 
-type JavaField struct {
-}
+type JavaField struct{}
 
 func (f *Field) GetType() *FieldType {
 	if f != nil {

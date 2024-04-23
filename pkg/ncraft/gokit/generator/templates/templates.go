@@ -72,7 +72,6 @@ func fileNames(efs embed.FS, prefixTrim string) []string {
 		names = append(names, path)
 		return nil
 	})
-
 	if err != nil {
 		return []string{}
 	}

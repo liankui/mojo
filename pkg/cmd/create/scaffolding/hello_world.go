@@ -9,9 +9,11 @@ import (
 	"github.com/mojo-lang/mojo/pkg/util"
 )
 
-const HelloWorldPackageName = "hello_world"
-const HelloWorldOrg = "mojo-lang.org"
-const HelloWorldRepo = "git.company.com/examples/hello-world"
+const (
+	HelloWorldPackageName = "hello_world"
+	HelloWorldOrg         = "mojo-lang.org"
+	HelloWorldRepo        = "git.company.com/examples/hello-world"
+)
 
 const HandlerMethod = `
 func (s helloWorld) GetEcho(ctx context.Context, in *pb.GetEchoRequest) (*pb.Echo, error) {
@@ -37,7 +39,7 @@ func GenerateHelloWorldFiles(output string) error {
 		if err := core.CreateDir(path); err != nil {
 			return err
 		}
-		if err := os.WriteFile(f.Name, []byte(f.Content), 0666); err != nil {
+		if err := os.WriteFile(f.Name, []byte(f.Content), 0o666); err != nil {
 			return err
 		}
 	}

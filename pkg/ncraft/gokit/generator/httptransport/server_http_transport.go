@@ -15,8 +15,7 @@ import (
 
 const ServerHttpTransportPath = "pkg/NAME-service/svc/transport_http.go.tmpl"
 
-type ServerHttpTransport struct {
-}
+type ServerHttpTransport struct{}
 
 func NewServerHttpTransport(ds *data.Service) (*ServerHttpTransport, error) {
 	for _, method := range ds.Interface.Methods {

@@ -9,8 +9,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-type WellKnowTypeCompiler struct {
-}
+type WellKnowTypeCompiler struct{}
 
 // Compile some well know types will have different schema when as the nominal type, aka, when in struct field
 func (w *WellKnowTypeCompiler) Compile(ctx context.Context, decl *lang.NominalType) (*openapi.ReferenceableSchema, error) {

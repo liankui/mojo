@@ -10,15 +10,19 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-const constKeyword = "const"
-const constPrefix = "const "
-const cConstAttributionName = "c_const"
-const cPointerConstAttributeName = "c_pointer_const" // the pointer self is const
-var constSuffix = regexp.MustCompile(`\* ?const$`)
-var constInfix = regexp.MustCompile(`const ?\*`) // not support char * const *
+const (
+	constKeyword               = "const"
+	constPrefix                = "const "
+	cConstAttributionName      = "c_const"
+	cPointerConstAttributeName = "c_pointer_const" // the pointer self is const
+)
 
-type ConstRenamer struct {
-}
+var (
+	constSuffix = regexp.MustCompile(`\* ?const$`)
+	constInfix  = regexp.MustCompile(`const ?\*`) // not support char * const *
+)
+
+type ConstRenamer struct{}
 
 func NewConstRenamer(options core.Options) *ConstRenamer {
 	_ = options

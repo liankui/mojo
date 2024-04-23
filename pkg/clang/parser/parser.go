@@ -12,8 +12,10 @@ import (
 	"github.com/mojo-lang/lang/go/pkg/mojo/lang"
 )
 
-const macOSDefaultIncludeDir = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-const macOSDefaultCxxIncludeDir = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1"
+const (
+	macOSDefaultIncludeDir    = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+	macOSDefaultCxxIncludeDir = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1"
+)
 
 type Diagnostic struct {
 	Problem  string

@@ -12,8 +12,10 @@ import (
 const needIndent = "need-indent"
 
 // A Config node controls the output.
-type Config = printer.Config
-type Cursor = printer.Cursor
+type (
+	Config = printer.Config
+	Cursor = printer.Cursor
+)
 
 type Printer struct {
 	P      *printer.Printer

@@ -29,14 +29,18 @@ import (
 )
 
 // force including the rpc, geom package in go.mod for generating all the mojo packages
-var _ = rpc.Message{}
-var _ = geom.LngLat{}
+var (
+	_ = rpc.Message{}
+	_ = geom.LngLat{}
+)
 
 //go:embed mojo/*
 var packages embed.FS
 
-var mojoPackages map[string]*lang.Package
-var mojoPackagesOnce sync.Once
+var (
+	mojoPackages     map[string]*lang.Package
+	mojoPackagesOnce sync.Once
+)
 
 func GetMojoPackages() map[string]*lang.Package {
 	mojoPackagesOnce.Do(func() {
@@ -69,7 +73,6 @@ func GetMojoPackages() map[string]*lang.Package {
 			pkgs[pkg.FullName] = pkg
 			return nil
 		})
-
 		if err != nil {
 			logs.Errorw("failed to get embed mojo packages", "error", err)
 			return

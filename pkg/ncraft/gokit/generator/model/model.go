@@ -16,8 +16,7 @@ import (
 // TemplatePath is the path to the entity gotemplate file.
 const TemplatePath = "internal/model/ENTITY_model.go.tmpl"
 
-type Model struct {
-}
+type Model struct{}
 
 func (m Model) Generate(path string, service *data.Service) ([]*util2.GeneratedFile, error) {
 	if path != TemplatePath {

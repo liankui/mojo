@@ -11,8 +11,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/util"
 )
 
-type Generator struct {
-}
+type Generator struct{}
 
 func New() *Generator {
 	return &Generator{}

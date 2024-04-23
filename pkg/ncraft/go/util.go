@@ -53,7 +53,6 @@ func DiffGoCode(inA, inB string) (outA, outB, diff string) {
 // formatted copy of that code.
 func TestFormat(code string) (string, error) {
 	formatted, err := format.Source([]byte(code))
-
 	if err != nil {
 		return code, err
 	}

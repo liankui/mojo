@@ -250,7 +250,6 @@ func CompileParameters(ctx context.Context, method *lang.FunctionDecl, httpMetho
 		if param.HasAttribute(http.BodyAttributeFullName) {
 			continue
 		} else if v, err := param.GetBoolAttribute("unwrap"); err == nil && v {
-
 			if decl := param.Type.GetTypeDeclaration().GetStructDecl(); decl != nil {
 				declCtx := context.WithValues(thisCtx, "unwrappedField", param.Name)
 				for _, field := range decl.GetType().GetFields() {

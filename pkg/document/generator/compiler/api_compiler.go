@@ -36,7 +36,6 @@ func (a *ApiCompiler) Compile(pkg *lang.Package, api *openapi.OpenAPI) (*documen
 		}
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}

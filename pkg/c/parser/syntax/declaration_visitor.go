@@ -210,7 +210,6 @@ func (v *DeclarationVisitor) VisitStructOrUnionSpecifier(ctx *StructOrUnionSpeci
 
 			return structDecl
 		} else if su == "union" {
-
 		}
 	}
 

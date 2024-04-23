@@ -7,8 +7,7 @@ import (
 	"github.com/mojo-lang/lang/go/pkg/mojo/lang"
 )
 
-type ExpressionDecompiler struct {
-}
+type ExpressionDecompiler struct{}
 
 func (d *ExpressionDecompiler) CompileExpression(ctx context.Context, expr *lang.Expression) (*sql.Expression, error) {
 	switch expression := expr.Expression.(type) {

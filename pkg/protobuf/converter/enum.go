@@ -11,8 +11,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-type Enum struct {
-}
+type Enum struct{}
 
 func (e Enum) ConvertTo(ctx context.Context, decl *lang.EnumDecl, enum *descriptor.Enum) error {
 	thisCtx := context.WithDescriptor(context.WithType(ctx, decl), enum)

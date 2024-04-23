@@ -30,7 +30,6 @@ func (b ClientBuilder) Build() error {
 
 	cmp := gokit.NewCompiler()
 	err := cmp.CompilePackage(compiler.WithGoPackageImports(context.Empty(), options), b.Package)
-
 	if err != nil {
 		logs.Errorw("failed to compile ncraft gokit", "package", b.Package.FullName, "error", err.Error())
 		return err

@@ -19,8 +19,7 @@ func (f *fileNode) IsCircle() bool {
 	return len(f.circleNodes) > 0
 }
 
-type Searcher struct {
-}
+type Searcher struct{}
 
 func NewSearcher() *Searcher {
 	return &Searcher{}

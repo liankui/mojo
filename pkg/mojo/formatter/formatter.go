@@ -6,8 +6,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/mojo/printer"
 )
 
-type Formatter struct {
-}
+type Formatter struct{}
 
 func New() *Formatter {
 	return &Formatter{}

@@ -11,8 +11,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-type Tuple struct {
-}
+type Tuple struct{}
 
 func init() {
 	RegisterNominalPlugin(&Tuple{})

@@ -6,12 +6,14 @@ import (
 	"github.com/mojo-lang/protobuf/go/pkg/mojo/protobuf/descriptor"
 )
 
-const DescriptorKey = "@descriptor"
-const FileDescriptorKey = "@descriptor/File"
-const MessageDescriptorKey = "@descriptor/Message"
-const ServiceDescriptorKey = "@descriptor/Service"
-const EnumDescriptorKey = "@descriptor/Enum"
-const FieldDescriptorKey = "@descriptor/Field"
+const (
+	DescriptorKey        = "@descriptor"
+	FileDescriptorKey    = "@descriptor/File"
+	MessageDescriptorKey = "@descriptor/Message"
+	ServiceDescriptorKey = "@descriptor/Service"
+	EnumDescriptorKey    = "@descriptor/Enum"
+	FieldDescriptorKey   = "@descriptor/Field"
+)
 
 func WithDescriptor(ctx context.Context, value interface{}) context.Context {
 	key := ""

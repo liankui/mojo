@@ -7,8 +7,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-type TypeAlias struct {
-}
+type TypeAlias struct{}
 
 func (s TypeAlias) Compile(ctx context.Context, decl *lang.TypeAliasDecl, desc *descriptor.Message) error {
 	_ = desc

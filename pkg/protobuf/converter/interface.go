@@ -9,8 +9,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/protobuf/decompiler"
 )
 
-type Interface struct {
-}
+type Interface struct{}
 
 func (i Interface) Compile(ctx context.Context, decl *lang.InterfaceDecl, descriptor *descriptor.Service) error {
 	thisCtx := context.WithDescriptor(context.WithType(ctx, decl), descriptor)

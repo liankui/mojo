@@ -13,9 +13,11 @@ type Cmds []Cmd
 func (c Cmds) Len() int {
 	return len(c)
 }
+
 func (c Cmds) Swap(i, j int) {
 	c[i], c[j] = c[j], c[i]
 }
+
 func (c Cmds) Less(i, j int) bool {
 	return c[i].GetCmd().Name < c[j].GetCmd().Name
 }

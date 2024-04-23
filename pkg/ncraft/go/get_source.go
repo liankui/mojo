@@ -42,7 +42,6 @@ func FuncSourceCode(val interface{}) (string, error) {
 	}
 	code := bytes.NewBuffer(nil)
 	err = printer.Fprint(code, fset, fAst)
-
 	if err != nil {
 		return "", fmt.Errorf("couldn't print code for func '%v': %v\n", funcName, err)
 	}
@@ -54,7 +53,6 @@ func FuncSourceCode(val interface{}) (string, error) {
 // in the same file as the one provided, including the source of the function
 // provided.
 func AllFuncSourceCode(val interface{}) (string, error) {
-
 	ptr := reflect.ValueOf(val).Pointer()
 	fpath, _ := runtime.FuncForPC(ptr).FileLine(ptr)
 
@@ -84,7 +82,6 @@ func AllFuncSourceCode(val interface{}) (string, error) {
 	for _, fnc := range fncSlc {
 		code := bytes.NewBuffer(nil)
 		err = printer.Fprint(code, fset, fnc)
-
 		if err != nil {
 			return "", fmt.Errorf("couldn't print code for func '%v': %v\n", fnc.Name.String(), err)
 		}

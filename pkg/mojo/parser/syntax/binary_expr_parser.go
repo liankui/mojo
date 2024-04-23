@@ -36,8 +36,7 @@ var precedenceIndex = map[string]int32{
 	"**":  47,
 }
 
-type BinaryExprParser struct {
-}
+type BinaryExprParser struct{}
 
 func (b BinaryExprParser) Parse(prefix *lang.Expression, binaries []*lang.BinaryExpr) *lang.Expression {
 	if len(binaries) == 0 || prefix == nil {

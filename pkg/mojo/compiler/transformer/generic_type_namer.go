@@ -6,8 +6,7 @@ import (
 	"github.com/mojo-lang/lang/go/pkg/mojo/lang"
 )
 
-type GenericTypeNamer struct {
-}
+type GenericTypeNamer struct{}
 
 func (g GenericTypeNamer) NameFrom(name string) string {
 	if t, err := lang.ParseNominalTypeFullName(name); err != nil {

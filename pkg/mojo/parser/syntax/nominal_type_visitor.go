@@ -258,8 +258,7 @@ func (n *NominalTypeVisitor) VisitTupleTypeElement(ctx *TupleTypeElementContext)
 		nominalType.Attributes = GetAttributes(ctx.Attributes())
 
 		if identifier := ctx.DeclarationIdentifier(); identifier != nil {
-			nominalType.Attributes =
-				lang.SetStringAttribute(nominalType.Attributes, core.LabelAttributeName, identifier.GetText())
+			nominalType.Attributes = lang.SetStringAttribute(nominalType.Attributes, core.LabelAttributeName, identifier.GetText())
 		}
 
 		return nominalType

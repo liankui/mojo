@@ -12,8 +12,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/protobuf/decompiler"
 )
 
-type Array struct {
-}
+type Array struct{}
 
 func init() {
 	RegisterNominalPlugin(&Array{})

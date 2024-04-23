@@ -18,8 +18,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-type Struct struct {
-}
+type Struct struct{}
 
 const inheritSourceFileKey = "inherit-source-file"
 

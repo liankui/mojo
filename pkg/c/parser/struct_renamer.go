@@ -9,11 +9,12 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-const structPrefix = "struct "
-const cStructAttributionName = "c_struct"
+const (
+	structPrefix           = "struct "
+	cStructAttributionName = "c_struct"
+)
 
-type StructRenamer struct {
-}
+type StructRenamer struct{}
 
 func NewStructRenamer(options core.Options) *StructRenamer {
 	_ = options

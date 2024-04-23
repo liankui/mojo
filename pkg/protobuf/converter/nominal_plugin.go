@@ -14,8 +14,10 @@ type NominalPlugin interface {
 	ConvertTo(ctx context.Context, t *lang.NominalType) (string, string, error)
 }
 
-var once sync.Once
-var nominalPlugins map[string][]NominalPlugin
+var (
+	once           sync.Once
+	nominalPlugins map[string][]NominalPlugin
+)
 
 func RegisterNominalPlugin(plugin NominalPlugin) {
 	once.Do(func() {

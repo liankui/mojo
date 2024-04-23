@@ -71,5 +71,5 @@ func (c *GeneratedFile) WriteTo(output string, guard *PathGuard) error {
 		}
 	}
 
-	return os.WriteFile(name, []byte(c.Content), 0666)
+	return os.WriteFile(name, []byte(c.Content), 0o666)
 }

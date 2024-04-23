@@ -11,8 +11,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/util"
 )
 
-type ClientHttpTransport struct {
-}
+type ClientHttpTransport struct{}
 
 func NewClientHttpTransport(ds data.Service) (*ClientHttpTransport, error) {
 	for _, method := range ds.Interface.Methods {

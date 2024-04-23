@@ -7,8 +7,10 @@ import (
 	"github.com/mojo-lang/mojo/pkg/ncraft/data"
 )
 
-const GoPackageImportKey = "@go-package-import/"
-const DataMethodKey = "@data.method"
+const (
+	GoPackageImportKey = "@go-package-import/"
+	DataMethodKey      = "@data.method"
+)
 
 func WithGoPackageImports(ctx context.Context, options core.Options) context.Context {
 	newOptions := make(core.Options)

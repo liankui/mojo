@@ -10,14 +10,15 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-const cPointerAttributionName = "c_pointer"
-const cDoublePointerAttributionName = "c_double_pointer"
-const cppReferenceAttributeName = "cpp_reference"
+const (
+	cPointerAttributionName       = "c_pointer"
+	cDoublePointerAttributionName = "c_double_pointer"
+	cppReferenceAttributeName     = "cpp_reference"
+)
 
 var doublePointerRegex = regexp.MustCompile(`\* *\*$`)
 
-type PointerRenamer struct {
-}
+type PointerRenamer struct{}
 
 func NewPointerRenamer(options core.Options) *PointerRenamer {
 	_ = options

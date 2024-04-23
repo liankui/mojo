@@ -13,8 +13,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-type Map struct {
-}
+type Map struct{}
 
 func init() {
 	RegisterNominalPlugin(&Map{})

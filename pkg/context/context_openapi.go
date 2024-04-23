@@ -6,8 +6,10 @@ import (
 	"github.com/mojo-lang/openapi/go/pkg/mojo/openapi"
 )
 
-const OpenAPIKey = "@openapi"
-const ComponentsOpenAPIKey = "@openapi/Components"
+const (
+	OpenAPIKey           = "@openapi"
+	ComponentsOpenAPIKey = "@openapi/Components"
+)
 
 func WithOpenAPI(ctx context.Context, api *openapi.OpenAPI) context.Context {
 	return WithValues(ctx, OpenAPIKey, api)

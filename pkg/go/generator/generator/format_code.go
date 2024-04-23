@@ -6,7 +6,6 @@ import "go/format"
 // that code. If formatting fails, the original source code is returned.
 func FormatCode(code string) string {
 	formatted, err := format.Source([]byte(code))
-
 	if err != nil {
 		// Set formatted to code so at least we get something to examine
 		formatted = []byte(code)

@@ -12,8 +12,10 @@ import (
 	"github.com/mojo-lang/mojo/pkg/util"
 )
 
-const DependencyCircle = "dependency_circle"
-const pluginName = "semantic.circle-resolver"
+const (
+	DependencyCircle = "dependency_circle"
+	pluginName       = "semantic.circle-resolver"
+)
 
 type Resolver struct {
 	plugin.BasicPlugin

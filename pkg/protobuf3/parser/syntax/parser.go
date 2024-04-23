@@ -13,8 +13,7 @@ import (
 	"github.com/mojo-lang/mojo/pkg/util"
 )
 
-type Parser struct {
-}
+type Parser struct{}
 
 func New(options core.Options) *Parser {
 	_ = options

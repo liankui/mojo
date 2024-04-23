@@ -6,13 +6,14 @@ import (
 	"github.com/mojo-lang/mojo/pkg/context"
 )
 
-var _ = Array{}
-var _ = Map{}
-var _ = Tuple{}
-var _ = Union{}
+var (
+	_ = Array{}
+	_ = Map{}
+	_ = Tuple{}
+	_ = Union{}
+)
 
-type Nominal struct {
-}
+type Nominal struct{}
 
 // Compile
 // type alias transform

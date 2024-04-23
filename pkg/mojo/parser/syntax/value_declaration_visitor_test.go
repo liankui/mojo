@@ -43,5 +43,4 @@ func ParseConstantDecl(t *testing.T, decl string) *lang.ConstantDecl {
 }
 
 func TestValueDeclarationVisitor_VisitVariableDeclaration(t *testing.T) {
-
 }

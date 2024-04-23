@@ -21,9 +21,14 @@ user
 └── package.mojo
 ```
 
-### 2.在mojo/demo目录下构思接口和数据结构
-新增路径mojo/user/v1，并添加mojo/user/v1/user.mojo文件，内容如下
+### 2.在mojo/user目录下构思接口和数据结构
+新增路径 user/mojo/user/v1
 ```bash
+mkdir ./user/mojo/user/v1
+```
+添加 mojo/user/v1/user.mojo 文件，内容如下
+```bash
+cat <<EOF | tee ./user/mojo/user/v1/user.mojo
 /// 用户服务
 ///
 /// 用户相关的接口
@@ -51,6 +56,7 @@ type User {
     create_time: Timestamp @100
     update_time: Timestamp @101
 }
+EOF
 ```
 注意：
 1. 使用interface定义接口信息，使用type定义数据接口
@@ -60,7 +66,7 @@ type User {
 ### 3.使用mojo命令生成项目代码
 在生成user目录下使用命令：
 ```bash
-chaosmojo build --path=user --targets=api,service
+chaosmojo build --path=./user --targets=api,service
 ```
 --targets=api参数命令构建api接口，可生成openapi、document、protobuf和go目录文件
 

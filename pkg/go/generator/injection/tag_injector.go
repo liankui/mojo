@@ -37,8 +37,10 @@ import (
 	"github.com/mojo-lang/core/go/pkg/mojo/core"
 )
 
-type TagChanger = func(ctx context.Context, field *ast.Field, tags *structtag.Tags)
-type TagInjections map[string]structtag.Tags
+type (
+	TagChanger    = func(ctx context.Context, field *ast.Field, tags *structtag.Tags)
+	TagInjections map[string]structtag.Tags
+)
 
 type TagInjector struct {
 	Injector

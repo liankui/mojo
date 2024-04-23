@@ -17,8 +17,7 @@ func GetPackageDirName(data *Data) string {
 	return strcase.ToKebab(data.Package.Name)
 }
 
-type Generator struct {
-}
+type Generator struct{}
 
 func (g *Generator) Generate(data *Data, output string) error {
 	var files []*util.GeneratedFile
@@ -77,7 +76,7 @@ func (g *Generator) Generate(data *Data, output string) error {
 			if err := core.CreateDir(path); err != nil {
 				return err
 			}
-			if err := os.WriteFile(name, []byte(f.Content), 0666); err != nil {
+			if err := os.WriteFile(name, []byte(f.Content), 0o666); err != nil {
 				return err
 			}
 		}

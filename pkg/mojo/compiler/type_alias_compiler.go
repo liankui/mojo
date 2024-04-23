@@ -14,8 +14,10 @@ func init() {
 	plugin.RegisterPlugin(NewTypeAliasCompiler(nil, typeAliasName2, 7))
 }
 
-const typeAliasName = "compiler.type-alias"
-const typeAliasName2 = "compiler.type-alias-2"
+const (
+	typeAliasName  = "compiler.type-alias"
+	typeAliasName2 = "compiler.type-alias-2"
+)
 
 // TypeAliasCompiler nominal type alias process except the Generic Type
 type TypeAliasCompiler struct {
