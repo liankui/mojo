@@ -2,7 +2,7 @@ package model
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -14,7 +14,7 @@ import (
 )
 
 // TemplatePath is the path to the entity gotemplate file.
-const TemplatePath = "internal/model/ENTITY_model.go.tmpl"
+const TemplatePath = "pkg/model/ENTITY.go.tmpl"
 
 type Model struct{}
 
@@ -25,13 +25,14 @@ func (m Model) Generate(path string, service *data.Service) ([]*util2.GeneratedF
 
 	var files []*util2.GeneratedFile
 
+	// TODO: add value to entities
 	for _, v := range service.Entities {
 		reader, err := util2.ApplyTemplate("Model", templates.EntityModel, v, service.FuncMap)
 		if err != nil {
 			return nil, err
 		}
 
-		codeBytes, err := ioutil.ReadAll(reader)
+		codeBytes, err := io.ReadAll(reader)
 		if err != nil {
 			return nil, err
 		}

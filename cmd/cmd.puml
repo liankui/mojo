@@ -1,0 +1,67 @@
+@startuml
+namespace cmd {
+    class App << (S,Aquamarine) >> {
+        + Verbose bool
+        + Help bool
+        + BinName string
+        + Workplace string
+        + Version string
+        + VersionDate string
+
+        + Execute() 
+
+    }
+    class BaseCmd << (S,Aquamarine) >> {
+        - source string
+        - baseURL string
+        - environment string
+        - buildWatch bool
+        - mode string
+        - cfgFile string
+        - cfgDir string
+        - logFile string
+
+        + GetCmd() *BaseCmd
+
+    }
+    class BuildCmd << (S,Aquamarine) >> {
+        + Build() 
+        + Execute(ctx *cli.Context) error
+
+    }
+    interface Cmd  {
+        + GetCmd() *BaseCmd
+
+    }
+    class Cmds << (S,Aquamarine) >> {
+        + Len() int
+        + Swap(i int, j int) 
+        + Less(i int, j int) bool
+
+    }
+    class CreateCmd << (S,Aquamarine) >> {
+        + Build() 
+        + Execute(ctx *cli.Context) error
+
+    }
+    class FormatCmd << (S,Aquamarine) >> {
+        + Build() 
+        + Execute(ctx *cli.Context) error
+
+    }
+    class cmd.Cmds << (T, #FF7700) >>  {
+    }
+}
+"cli.App" *-- "cmd.App"
+"cli.Command" *-- "cmd.BaseCmd"
+"cmd.BaseCmd" *-- "cmd.BuildCmd"
+"commander.Builder" *-- "cmd.BuildCmd"
+"cmd.BaseCmd" *-- "cmd.CreateCmd"
+"commander.Creator" *-- "cmd.CreateCmd"
+"cmd.BaseCmd" *-- "cmd.FormatCmd"
+"commander.Formatter" *-- "cmd.FormatCmd"
+
+"cmd.Cmd" <|-- "cmd.BaseCmd"
+
+"cmd.[]Cmd" #.. "cmd.Cmds"
+@enduml

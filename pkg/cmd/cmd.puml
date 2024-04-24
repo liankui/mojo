@@ -1,0 +1,229 @@
+@startuml
+namespace _go {
+    class Builder << (S,Aquamarine) >> {
+        + Output string
+        + Files []*descriptor.File
+
+        + Build() error
+
+    }
+}
+"builder.Builder" *-- "_go.Builder"
+
+
+namespace builder {
+    class Builder << (S,Aquamarine) >> {
+        + PWD string
+        + Path string
+        + Package *lang.Package
+        + APIEnabled bool
+
+        + GetAbsolutePath() string
+
+    }
+}
+
+
+namespace commander {
+    class Builder << (S,Aquamarine) >> {
+        + Package *lang.Package
+        + Files []*descriptor.File
+        + OpenAPIs *openapi.OpenAPIs
+        + PackageName string
+        + Targets string
+        + Engine string
+        + Output string
+        + Pwd string
+        + Path string
+        + APIEnabled bool
+        + NcraftAllEnabled bool
+        + NcraftServiceEnabled bool
+        + NcraftClientEnabled bool
+        + NcraftSidecarEnabled bool
+        + Repository string
+
+        - buildMojo() error
+        - buildProtobuf() error
+        - buildGo() error
+        - buildJava() error
+        - buildOpenapi() error
+        - buildDocument() error
+        - buildGokit(ncraftType string) error
+
+        + Execute() error
+
+    }
+    class Creator << (S,Aquamarine) >> {
+        + PackageName string
+        + Repository string
+        + Version string
+        + License string
+        + Author string
+        + Email string
+        + Organization string
+        + Data *scaffolding.Data
+        + Output string
+        + Pwd string
+        + HelloWorldMode bool
+        + RunImmediately bool
+
+        - createScaffolding() error
+
+        + Execute() error
+        + CompileHelloWorld(root string) error
+        + RunHelloWorld(root string) error
+
+    }
+    class Formatter << (S,Aquamarine) >> {
+        + WorkingDir string
+        + Path string
+        + Output string
+        + BackupSource bool
+        + TargetFiles cli.StringSlice
+        + TargetPackage string
+
+        + Execute() error
+
+    }
+}
+
+
+namespace document {
+    class Builder << (S,Aquamarine) >> {
+        + Output string
+        + OpenAPIs *openapi.OpenAPIs
+
+        + Build() error
+
+    }
+}
+"builder.Builder" *-- "document.Builder"
+
+
+namespace format {
+    class Formatter << (S,Aquamarine) >> {
+        + WorkingDir string
+        + Path string
+
+        - formatPackage(pkg *lang.Package) error
+
+        + Format() error
+        + FormatPackage(pkg *lang.Package) error
+
+    }
+}
+
+
+namespace gokit {
+    class Builder << (S,Aquamarine) >> {
+        + Output string
+        + Type string
+        + Repository string
+
+        + Build() error
+
+    }
+    class ClientBuilder << (S,Aquamarine) >> {
+        + Output string
+        + Repository string
+
+        + Build() error
+
+    }
+    class SidecarBuilder << (S,Aquamarine) >> {
+        + Output string
+        + Repository string
+
+        + Build() error
+
+    }
+}
+"builder.Builder" *-- "gokit.Builder"
+"builder.Builder" *-- "gokit.ClientBuilder"
+"builder.Builder" *-- "gokit.SidecarBuilder"
+
+
+namespace graph {
+    class Builder << (S,Aquamarine) >> {
+        + Build() error
+
+    }
+}
+"builder.Builder" *-- "graph.Builder"
+
+
+namespace java {
+    class Builder << (S,Aquamarine) >> {
+        + Output string
+        + Files []*descriptor.File
+
+        - protocJava() error
+
+        + Build() error
+
+    }
+}
+"builder.Builder" *-- "java.Builder"
+
+
+namespace mojo {
+    class Builder << (S,Aquamarine) >> {
+        + Build() (*lang.Package, error)
+
+    }
+}
+"builder.Builder" *-- "mojo.Builder"
+
+
+namespace openapi {
+    class Builder << (S,Aquamarine) >> {
+        + Output string
+
+        + Build() (*openapi.OpenAPIs, error)
+
+    }
+}
+"builder.Builder" *-- "openapi.Builder"
+
+
+namespace protobuf {
+    class Builder << (S,Aquamarine) >> {
+        + Output string
+
+        + Build() ([]*descriptor.File, error)
+
+    }
+}
+"builder.Builder" *-- "protobuf.Builder"
+
+
+namespace scaffolding {
+    class Data << (S,Aquamarine) >> {
+        + Package *types.MojoPackage
+
+        + IsMojoPackage() bool
+
+    }
+    class Generator << (S,Aquamarine) >> {
+        + Generate(data *Data, output string) error
+
+    }
+}
+
+
+namespace types {
+    class MojoPackage << (S,Aquamarine) >> {
+        + Name string
+        + FullName string
+        + Version string
+        + License string
+        + Repository string
+        + Author string
+        + Email string
+        + Organization string
+
+    }
+}
+
+
+@enduml

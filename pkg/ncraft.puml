@@ -1,0 +1,390 @@
+@startuml
+namespace client {
+    class Argument << (S,Aquamarine) >> {
+        + Name string
+        + FlagName string
+        + FlagArg string
+        + FlagType string
+        + FlagConvertFunc string
+        + GoArg string
+        + GoType string
+        + GoConvertInvoc string
+        + IsBaseType bool
+        + Repeated bool
+        + Enum bool
+
+    }
+    class Arguments << (S,Aquamarine) >> {
+        + MethArgs <font color=blue>map</font>[string]*MethodArguments
+
+        + AllFlags() string
+
+    }
+    class MethodArguments << (S,Aquamarine) >> {
+        + Args []*Argument
+
+        + FunctionArgs() string
+        + CallArgs() string
+        + MarshalFlags() string
+
+    }
+}
+
+
+namespace compiler {
+    class Services << (S,Aquamarine) >> {
+        + Data []*data.Service
+        + Interfaces []*data.Interface
+
+        - compileBindings(ctx context.Context, methodName string, path string, method *lang.FunctionDecl) (*data.HTTPBinding, error)
+        - compileBindingParameter(ctx context.Context, decl *lang.ValueDecl, pathParams <font color=blue>map</font>[string]bool, enclosing *data.HTTPParameter, binding *data.HTTPBinding) error
+        - compileBindingField(ctx context.Context, schema *openapi.Schema, index <font color=blue>map</font>[string]*openapi.Schema) *data.Field
+
+        + CompileInterface(ctx context.Context, decl *lang.InterfaceDecl) error
+        + CompileMethod(ctx context.Context, decl *lang.FunctionDecl, service *data.Service) error
+        + CompileMessage(ctx context.Context, decl *lang.StructDecl) (*data.Message, error)
+
+    }
+}
+
+
+namespace data {
+    class Enum << (S,Aquamarine) >> {
+        + Decl *lang.EnumDecl
+        + PackageName string
+        + Name string
+        + Go *GoEnum
+        + Extensions <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+        + GetGo() *GoEnum
+
+    }
+    class Field << (S,Aquamarine) >> {
+        + Decl *lang.ValueDecl
+        + Name string
+        + FullName string
+        + Exploded bool
+        + ExplodePrefix string
+        + Type *FieldType
+        + Enclosing *Field
+        + Go *GoField
+        + Java *JavaField
+        + Extensions <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+        + GetType() *FieldType
+        + GetKeyType() *FieldType
+        + GetElementType() *FieldType
+        + GetGoType() *GoFieldType
+        + GetElementGoType() *GoFieldType
+        + GetGoTypeName() string
+        + GetElementGoTypeName() string
+        + GetEnclosingField() *Field
+
+    }
+    class FieldType << (S,Aquamarine) >> {
+        + Name string
+        + PackageName string
+        + Enum *Enum
+        + Message *Message
+        + KeyType *FieldType
+        + ElementType *FieldType
+        + IsEnum bool
+        + IsMap bool
+        + IsArray bool
+        + IsScalar bool
+        + Go *GoFieldType
+        + Extensions <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+        + GetName() string
+        + IsString() bool
+        + GetPackageName() string
+        + GetKeyType() *FieldType
+        + GetElementType() *FieldType
+        + GetGoType() *GoFieldType
+        + GetKeyGoType() *GoFieldType
+        + GetElementGoType() *GoFieldType
+
+    }
+    class GoEnum << (S,Aquamarine) >> {
+        + PackageName string
+        + ImportPath string
+
+    }
+    class GoField << (S,Aquamarine) >> {
+    }
+    class GoFieldType << (S,Aquamarine) >> {
+        + Name string
+        + IsPointer bool
+
+    }
+    class GoHTTPParameter << (S,Aquamarine) >> {
+        + ParamUnmarshaler string
+
+    }
+    class GoMessage << (S,Aquamarine) >> {
+        + PackageName string
+        + ImportPath string
+
+    }
+    class GoService << (S,Aquamarine) >> {
+        + PackageName string
+        + RepositoryPath string
+        + ApiRepositoryPath string
+        + ApiImportPath string
+        + ImportedTypePaths []string
+
+    }
+    class HTTPBinding << (S,Aquamarine) >> {
+        + Label string
+        + Verb string
+        + Path string
+        + BasePath string
+        + Parameters HttpParameters
+        + Body *HTTPParameter
+        + Response *HTTPResponse
+        + Parent *Method
+        + Extensions <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+        + GetResponseBody() *Field
+
+    }
+    class HTTPParameter << (S,Aquamarine) >> {
+        + Name string
+        + FullName string
+        + Field *Field
+        + Location string
+        + Style string
+        + Go *GoHTTPParameter
+        + Extensions <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+        + GetField() *Field
+        + GetFieldType() *FieldType
+        + GetElementType() *FieldType
+        + IsEnum() bool
+        + IsMap() bool
+        + IsArray() bool
+        + IsScalar() bool
+        + IsElementScalar() bool
+        + IsRawStyle() bool
+        + GetEnclosingField() *Field
+        + GetGoType() *GoFieldType
+        + GetElementGoType() *GoFieldType
+        + GetGoTypeName() string
+        + GetElementGoTypeName() string
+
+    }
+    class HTTPResponse << (S,Aquamarine) >> {
+        + Body *Field
+        + Headers <font color=blue>map</font>[string]string
+
+        + GetBody() *Field
+
+    }
+    class HttpParameters << (S,Aquamarine) >> {
+        + Len() int
+        + Swap(i int, j int) 
+        + Less(i int, j int) bool
+
+    }
+    class Interface << (S,Aquamarine) >> {
+        + Decl *lang.InterfaceDecl
+        + Name string
+        + BaredName string
+        + ServerName string
+        + HasSubscription bool
+        + Methods []*Method
+        + Extensions <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+    }
+    class JavaField << (S,Aquamarine) >> {
+    }
+    class JavaService << (S,Aquamarine) >> {
+        + PackageName string
+
+    }
+    class Message << (S,Aquamarine) >> {
+        + Decl *lang.StructDecl
+        + PackageName string
+        + Name string
+        + Entity bool
+        + Fields []*Field
+        + Go *GoMessage
+        + Extensions <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+        + GetFields() []*Field
+
+    }
+    class MessagingSubscription << (S,Aquamarine) >> {
+        + Topic string
+
+    }
+    class Method << (S,Aquamarine) >> {
+        + Decl *lang.FunctionDecl
+        + Name string
+        + StandardName string
+        + CustomName string
+        + Request *Message
+        + Response *Message
+        + Entity *Message
+        + Inherit *Interface
+        + IsEntity bool
+        + IsInherited bool
+        + IsStandard bool
+        + IsBatch bool
+        + Bindings []*HTTPBinding
+        + Subscriptions []*MessagingSubscription
+        + Extensions <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+        + GetRequest() *Message
+        + GetResponse() *Message
+        + GetEntity() *Message
+
+    }
+    class Service << (S,Aquamarine) >> {
+        + Version string
+        + VersionDate string
+        + PackageName string
+        + PackageFullName string
+        + CombinedAPI bool
+        + ImportedMessages []*Message
+        + ImportedEnums []*Enum
+        + Entities []*Message
+        + AllInterfaces []*Interface
+        + Interface *Interface
+        + FuncMap template.FuncMap
+        + Go *GoService
+        + Java *JavaService
+        + Extensions <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+        + HasImported() bool
+
+    }
+    class data.HttpParameters << (T, #FF7700) >>  {
+    }
+}
+
+
+namespace generator {
+    class HandlerTemplate << (S,Aquamarine) >> {
+        + Interface string
+        + Methods string
+        + Extension string
+
+    }
+    class Options << (S,Aquamarine) >> {
+        + Repository string
+        + MixedInAPI bool
+        + ApiRepository string
+        + Version string
+        + VersionDate string
+        + Output string
+        + PreviousFiles <font color=blue>map</font>[string]io.Reader
+        + ExtensionData <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+        + HandlerTemplate *HandlerTemplate
+
+        - generateTemplatedFiles(ds *data.Service, tmplPaths []string, getter templates.FileGetter) ([]*util.GeneratedFile, error)
+
+        + SyncTo(ds *data.Service) 
+        + GenerateClient(ds *data.Service) ([]*util.GeneratedFile, error)
+        + GenerateService(ds *data.Service) ([]*util.GeneratedFile, error)
+
+    }
+}
+
+
+namespace gokit {
+    class Compiler << (S,Aquamarine) >> {
+        + Services []*data.Service
+
+        + CompilePackage(ctx context.Context, pkg *lang.Package) error
+
+    }
+    class gokit.Options << (T, #FF7700) >>  {
+    }
+    class "generator.Options" as generatorOptions {
+        'This class was created so that we can correctly have an alias pointing to this name. Since it contains dots that can break namespaces
+    }
+}
+
+
+namespace handlers {
+    class HookRender << (S,Aquamarine) >> {
+        - prev io.Reader
+
+        + Render(_ string, _ *data.Service) (io.Reader, error)
+
+    }
+    class Middlewares << (S,Aquamarine) >> {
+        - prev io.Reader
+
+        + Load(prev io.Reader) 
+        + Render(path string, service *data.Service) (io.Reader, error)
+
+    }
+    class handler << (S,Aquamarine) >> {
+        - fileSet *token.FileSet
+        - service *data.Interface
+        - methodMap methodMap
+        - ast *ast.File
+
+        - buffer() (*bytes.Buffer, error)
+
+        + Render(alias string, service *data.Service) (io.Reader, error)
+
+    }
+    class handlers.methodMap << (T, #FF7700) >>  {
+    }
+    class methodMap << (S,Aquamarine) >> {
+        - pruneDecls(decls []ast.Decl, svcName string) ([]ast.Decl, []ast.Decl)
+
+    }
+    class "<font color=blue>map</font>[string]*data.Method" as fontcolorbluemapfontstringdataMethod {
+        'This class was created so that we can correctly have an alias pointing to this name. Since it contains dots that can break namespaces
+    }
+}
+
+"render.Renderer" <|-- "handlers.HookRender"
+"render.Renderer" <|-- "handlers.Middlewares"
+"render.Renderer" <|-- "handlers.handler"
+
+namespace httptransport {
+    class ClientHttpTransport << (S,Aquamarine) >> {
+        + Render(tmpl string, ds *data.Service) (io.Reader, error)
+
+    }
+    class ServerHttpTransport << (S,Aquamarine) >> {
+        + Render(tmpl string, ds *data.Service) (io.Reader, error)
+
+    }
+}
+
+"render.Renderer" <|-- "httptransport.ClientHttpTransport"
+"render.Renderer" <|-- "httptransport.ServerHttpTransport"
+
+namespace model {
+    class Model << (S,Aquamarine) >> {
+        + Generate(path string, service *data.Service) ([]*util.GeneratedFile, error)
+
+    }
+}
+
+
+namespace render {
+    interface Renderer  {
+        + Render( string,  *data.Service) (io.Reader, error)
+
+    }
+}
+
+
+namespace templates {
+    class templates.FileGetter << (T, #FF7700) >>  {
+    }
+}
+
+
+"data.[]*HTTPParameter" #.. "data.HttpParameters"
+"gokit.generatorOptions" #.. "gokit.Options"
+"handlers.fontcolorbluemapfontstringdataMethod" #.. "handlers.methodMap"
+"templates.<font color=blue>func</font>(string) ([]byte, error)" #.. "templates.FileGetter"
+@enduml
