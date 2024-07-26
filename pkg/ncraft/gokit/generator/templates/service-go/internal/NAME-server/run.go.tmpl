@@ -15,13 +15,13 @@ import (
 	"time"
 
 	// 3d Party
-	nclient "github.com/chaos-io/chaos/gokit/client"
-	"github.com/chaos-io/chaos/gokit/kit"
-	"github.com/chaos-io/chaos/gokit/metrics"
-	"github.com/chaos-io/chaos/gokit/sd"
-	nserver "github.com/chaos-io/chaos/gokit/server"
-	"github.com/chaos-io/chaos/gokit/tracing"
-	"github.com/chaos-io/chaos/gokit/utils/network"
+	nclient "github.com/chaos-io/gokit/client"
+	"github.com/chaos-io/gokit/kit"
+	"github.com/chaos-io/gokit/metrics"
+	"github.com/chaos-io/gokit/sd"
+	nserver "github.com/chaos-io/gokit/server"
+	"github.com/chaos-io/gokit/tracing"
+	"github.com/chaos-io/gokit/utils/network"
 	"github.com/chaos-io/chaos/logs"
 	{{if .Interface.HasSubscription}}"github.com/chaos-io/chaos/messaging"{{end}}
 	"github.com/etherlabsio/healthcheck/v2"

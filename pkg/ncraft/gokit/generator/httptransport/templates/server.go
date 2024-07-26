@@ -107,8 +107,8 @@ import (
 
 	httptransport "github.com/go-kit/kit/transport/http"
 	mjhttp "github.com/mojo-lang/http/go/pkg/mojo/http"
-	pagination "github.com/chaos-io/chaos/gokit/pagination"
-	nhttp "github.com/chaos-io/chaos/gokit/transport/http"
+	pagination "github.com/chaos-io/gokit/pagination"
+	nhttp "github.com/chaos-io/gokit/transport/http"
 	stdopentracing "github.com/opentracing/opentracing-go"
 
     {{$corePackage := "github.com/mojo-lang/core/go/pkg/mojo/core"}}

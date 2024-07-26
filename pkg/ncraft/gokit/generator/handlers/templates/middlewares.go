@@ -4,7 +4,7 @@ const Middlewares = `
 package handlers
 
 import (
-	"github.com/chaos-io/chaos/gokit/middleware"
+	"github.com/chaos-io/gokit/middleware"
 	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 	"github.com/go-kit/kit/tracing/opentracing"
 	stdopentracing "github.com/opentracing/opentracing-go"

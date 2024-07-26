@@ -7,7 +7,7 @@
 ### 1.指定package生成代码
 在任一目录下使用如下命令生成user服务：
 ```bash
-chaosmojo create --package=user --output=. --repo=github.com/liankui/mojo/example/user --Author=cc
+chaosmojo create --package=user --output=. --repo=github.com/liankui/mojo/example/user --Author=cc --email=cc@email.com --organization=cc.org
 ```
 目录结构如下：
 ```bash
@@ -24,7 +24,7 @@ user
 ### 2.在mojo/user目录下构思接口和数据结构
 新增路径 user/mojo/user/v1
 ```bash
-mkdir ./user/mojo/user/v1
+mkdir -v ./user/mojo/user/v1
 ```
 添加 mojo/user/v1/user.mojo 文件，内容如下
 ```bash
@@ -59,8 +59,8 @@ type User {
 EOF
 ```
 注意：
-1. 使用interface定义接口信息，使用type定义数据接口
-2. 字段名称小写且为下划线形式，字段类型大写
+1. interface定义接口信息，type定义数据结构
+2. 字段的名称使用下划线小写，字段类型使用大驼峰命名
 3. 接口url书写规则采用[Google AIP](https://google.aip.dev/122)规范形式
 
 ### 3.使用mojo命令生成项目代码

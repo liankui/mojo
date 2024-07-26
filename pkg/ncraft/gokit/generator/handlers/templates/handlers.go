@@ -23,6 +23,8 @@ package handlers
 import (
 	"context"
 	
+	"github.com/chaos-io/chaos/logs"
+
 	{{range $i := .Go.ImportedTypePaths}}
 	"{{$i}}"
 	{{- end}}
