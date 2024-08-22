@@ -43,14 +43,14 @@ func (b *CreateCmd) Build() {
 		&cli.StringFlag{
 			Name:        "output",
 			Aliases:     []string{"o"},
-			Usage:       "the Output to generate",
+			Usage:       "the output to generate",
 			Destination: &b.Output,
 			DefaultText: ".",
 		},
 		&cli.StringFlag{
 			Name:        "repo",
 			Aliases:     []string{"r"},
-			Usage:       "the git repository of NCraft releated code",
+			Usage:       "the git repository of ncraft related code",
 			Destination: &b.Repository,
 		},
 		&cli.StringFlag{
@@ -85,7 +85,7 @@ func (b *CreateCmd) Build() {
 			Aliases:     []string{"org"},
 			Usage:       "the organization of the package to be created, for generating java code",
 			Destination: &b.Organization,
-			DefaultText: "YOUR ORGANIZATION (like: mojolang.org)",
+			DefaultText: "YOUR ORGANIZATION (like: mojo-lang.org)",
 		},
 		&cli.BoolFlag{
 			Name:        "run",

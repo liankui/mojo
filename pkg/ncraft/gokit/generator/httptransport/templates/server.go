@@ -142,6 +142,7 @@ var ({{range $msg := .ImportedMessages}}
 {{- end}}){{end}}
 
 var cfg *nhttp.Config
+
 func init()  {
 	cfg = nhttp.NewConfig()
 }

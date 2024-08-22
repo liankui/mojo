@@ -16,7 +16,6 @@ require (
 	github.com/mojo-lang/geom/go v0.0.0-20231010083419-ae85d486df78
 	github.com/mojo-lang/http/go v0.0.0-20240627072315-89ee9c59b807
 	github.com/mojo-lang/lang/go v0.0.0-20240726065356-77211e8660f2
-	github.com/mojo-lang/mojo/go v0.0.0-20240808090330-2abbcb7610b2
 	github.com/mojo-lang/openapi/go v0.0.0-20240104072634-11b492bf84c9
 	github.com/mojo-lang/protobuf/go v0.0.0-20231010083050-67d0430d7b2c
 	github.com/mojo-lang/rpc/go v0.0.0-20231010083250-7a2c9f3f5f32
@@ -100,6 +99,7 @@ require (
 	golang.org/x/crypto v0.21.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	golang.org/x/image v0.14.0 // indirect
+	golang.org/x/net v0.22.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/term v0.18.0 // indirect

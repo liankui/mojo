@@ -317,8 +317,6 @@ github.com/mojo-lang/http/go v0.0.0-20240627072315-89ee9c59b807 h1:ZV39lKeYHMScZ
 github.com/mojo-lang/http/go v0.0.0-20240627072315-89ee9c59b807/go.mod h1:0LqvxwBP9oGBK1oFofU3jQQkNUNZM3wV+f2jvq8LUsA=
 github.com/mojo-lang/lang/go v0.0.0-20240726065356-77211e8660f2 h1:6N2plYS+quM4Vq4uqF6ImVJbBsgLucaK0IcFjdRq3kk=
 github.com/mojo-lang/lang/go v0.0.0-20240726065356-77211e8660f2/go.mod h1:2HeIu0O0nVuLhdsN+0rwndpuxOJs6TqOdq/niPAQ/rk=
-github.com/mojo-lang/mojo/go v0.0.0-20240808090330-2abbcb7610b2 h1:WwAS+ikQH/sy5AWM5GUwHUJjNGJ+099JqluVrMN0fH8=
-github.com/mojo-lang/mojo/go v0.0.0-20240808090330-2abbcb7610b2/go.mod h1:61PV69gIqp9IRCyWEC98KyXaxRgps8o+hu4cl7O92Uo=
 github.com/mojo-lang/openapi/go v0.0.0-20240104072634-11b492bf84c9 h1:40fD9RhNgEnidCQN+G+JlXz6mmpZA4Uj+SaLsG4x5oc=
 github.com/mojo-lang/openapi/go v0.0.0-20240104072634-11b492bf84c9/go.mod h1:hSgC7JQu2a7FFoUwO5Ct2QECDwZoQk7ZapmHODSm7po=
 github.com/mojo-lang/protobuf/go v0.0.0-20231010083050-67d0430d7b2c h1:r1RkXMSqvHGhjdppwvmHmVeH6PhWUil5E3z97fx4SjU=
@@ -539,7 +537,8 @@ golang.org/x/net v0.0.0-20220225172249-27dd8689420f/go.mod h1:CfG3xpIq0wQ8r1q4Su
 golang.org/x/net v0.0.0-20220722155237-a158d28d115b/go.mod h1:XRhObCWvk6IyKnWLug+ECip1KBveYUHfp+8e9klMJ9c=
 golang.org/x/net v0.6.0/go.mod h1:2Tu9+aMcznHK/AK1HMvgo6xiTLG5rD5rZLDS+rp2Bjs=
 golang.org/x/net v0.10.0/go.mod h1:0qNGK6F8kojg2nk9dLZ2mShWaEBan6FAoqfSigmmuDg=
-golang.org/x/net v0.21.0 h1:AQyQV4dYCvJ7vGmJyKki9+PBdyvhkSd8EIx/qb0AYv4=
+golang.org/x/net v0.22.0 h1:9sGLhx7iRIHEiX0oAJ3MRZMUCElJgy7Br1nO+AMN3Tc=
+golang.org/x/net v0.22.0/go.mod h1:JKghWKKOSdJwpW2GEx0Ja7fmaKnMsbu+MWVZTokSYmg=
 golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
 golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
 golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=

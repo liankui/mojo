@@ -77,13 +77,13 @@ func (b *BuildCmd) Build() {
 		&cli.StringFlag{
 			Name:        "output",
 			Aliases:     []string{"o"},
-			Usage:       "the Output to generate",
+			Usage:       "the output to generate",
 			Destination: &b.Output,
 		},
 		&cli.StringFlag{
 			Name:        "repo",
 			Aliases:     []string{"sr"},
-			Usage:       "the git repository of NCraft related code",
+			Usage:       "the git repository of ncraft related code",
 			Destination: &b.Repository,
 		},
 	}

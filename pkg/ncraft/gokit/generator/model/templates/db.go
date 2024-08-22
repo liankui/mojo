@@ -8,8 +8,8 @@ import (
 	"sync"
 
 	"github.com/mojo-lang/db/go/pkg/mojo/db"
-	"github.com/ncraft-io/ncraft/go/pkg/ncraft/config"
-	"github.com/ncraft-io/ncraft/go/pkg/ncraft/logs"
+	"github.com/chaos-io/chaos/config"
+	"github.com/chaos-io/chaos/logs"
 )
 
 var d *db.DB
