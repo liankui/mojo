@@ -41,7 +41,8 @@ type FieldType struct {
 	// one of the integers, floats, strings, booleans, etc.
 	IsScalar bool
 
-	Go         *GoFieldType
+	Go *GoFieldType
+	// Java       *JavaFieldType
 	Extensions map[string]interface{}
 }
 
@@ -51,6 +52,17 @@ type GoFieldType struct {
 	// IsPointer is True if this FieldType represents a pointer to a type.
 	IsPointer bool
 }
+
+// type JavaFieldType struct {
+// 	Name      string
+// 	ParamName string
+// 	RawName   string
+// 	GRpcName  string
+//
+// 	NeedConvert      bool
+// 	GRpc2HttpConvert string
+// 	Http2GrpcConvert string
+// }
 
 func (f *FieldType) GetName() string {
 	if f != nil {
