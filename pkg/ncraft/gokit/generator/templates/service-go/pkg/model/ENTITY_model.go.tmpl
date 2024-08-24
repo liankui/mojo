@@ -1,16 +1,13 @@
-package templates
-
-const EntityModel = `
 package model
 
 import (
-    "context"
+	"context"
 	"sync"
 
-	"github.com/chaos-io/chaos/logs"
 	"github.com/chaos-io/chaos/db"
+	"github.com/chaos-io/chaos/logs"
 
-	"{{.Go.ImportPath}}"
+	"{{index .Go.ImportedTypePaths 0}}"
 )
 
 var {{ToLowerCamel .Name}}Model *{{.Name}}Model
@@ -88,4 +85,3 @@ func (m *{{.Name}}Model) BatchUpdate(ctx context.Context, {{ToLowerCamel .Name}}
 	result := m.DB.WithContext(ctx).Updates({{ToLowerCamel .Name}})
 	return result.RowsAffected, result.Error
 }
-`

@@ -5,48 +5,33 @@ const DB = `
 package model
 
 import (
+	"fmt"
 	"sync"
 
-	"github.com/mojo-lang/db/go/pkg/mojo/db"
 	"github.com/chaos-io/chaos/config"
-	"github.com/chaos-io/chaos/logs"
+	"github.com/chaos-io/chaos/db"
 )
 
 var d *db.DB
 var dOnce sync.Once
 
-func Get() *db.DB {
+func initDB() *db.DB {
 	dOnce.Do(func() {
-		cfg := &config.Config{}
-		err := config.Get("db").Scan(cfg)
-		if err != nil {
-			logs.Errorw("failed to get the d config", "error", err.Error())
-			panic("failed to get the d config")
+		cfg := &db.Config{}
+		if err := config.ScanFrom(cfg, "db"); err != nil {
+			panic(fmt.Errorf("failed to get the db config, error: %w", err))
 		}
 
-		if d = New(cfg); d == nil {
-			panic("create the db failed")
-		}
-
-		// use these options when creating tables in mysql
-		if cfg.Driver == d.MysqlDriverName {
-			d.DB = d.DB.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci")
-			sqlDb, err := d.DB.DB()
-			if err != nil {
-				logs.Warnw("get sqlDb error")
-			} else {
-				if cfg.GetMaxIdleConnections() != 0 {
-					sqlDb.SetMaxIdleConns(int(cfg.GetMaxIdleConnections()))
-					logs.Debugw("set mysql max idle connections", "val", cfg.GetMaxIdleConnections())
-				}
-				if cfg.GetMaxOpenConnections() != 0 {
-					sqlDb.SetMaxOpenConns(int(cfg.GetMaxOpenConnections()))
-					logs.Debugw("set mysql max open connections", "val", cfg.GetMaxOpenConnections())
-				}
-			}
+		if d = db.New(cfg); d == nil {
+			panic("created db is nil")
 		}
 	})
 
 	return d
 }
+
+func InitModel() {
+    // _ = Get{{.Name}}Model()
+}
+
 `

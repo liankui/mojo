@@ -79,11 +79,11 @@ func (o *Options) generateTemplatedFiles(ds *data.Service, tmplPaths []string, g
 			if files, err := m.Generate(tmplPath, ds); err != nil {
 				logs.Errorw("failed to generate model templates files", "err", err.Error())
 			} else {
-				if len(files) == 0 {
-					continue
+				if len(files) > 0 {
+					codeGenFiles = append(codeGenFiles, files...)
 				}
-				codeGenFiles = append(codeGenFiles, files...)
 			}
+			continue
 		}
 
 		// Re-derive the actual path for this file based on the service output

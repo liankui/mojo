@@ -5,8 +5,6 @@ import (
 	"io"
 	"strings"
 
-	"github.com/pkg/errors"
-
 	"github.com/mojo-lang/mojo/pkg/ncraft/data"
 	"github.com/mojo-lang/mojo/pkg/ncraft/gokit/generator/model/templates"
 	"github.com/mojo-lang/mojo/pkg/util"
@@ -14,19 +12,23 @@ import (
 	_go "github.com/mojo-lang/mojo/pkg/ncraft/go"
 )
 
-// TemplatePath is the path to the entity gotemplate file.
-const TemplatePath = "internal/model/ENTITY_model.go.tmpl"
+// TemplatePath is the path to the entity go template file.
+const TemplatePath = "pkg/model/ENTITY_model.go.tmpl"
 
 type Model struct{}
 
 func (m Model) Generate(path string, service *data.Service) ([]*util.GeneratedFile, error) {
-	if path != TemplatePath {
-		return nil, errors.Errorf("cannot render unknown file: %q", path)
-	}
-
 	var files []*util.GeneratedFile
 
-	for _, v := range service.Entities {
+	// for _, v := range service.Entities {
+	for _, v := range service.ImportedMessages {
+		if v.Name == "Null" {
+			continue
+		}
+
+		if len(service.Go.ImportedTypePaths) > 0 {
+			v.Go.ImportPath = service.Go.ImportedTypePaths[0]
+		}
 		reader, err := util.ApplyTemplate("Model", templates.EntityModel, v, service.FuncMap)
 		if err != nil {
 			return nil, err
@@ -39,10 +41,10 @@ func (m Model) Generate(path string, service *data.Service) ([]*util.GeneratedFi
 
 		formattedCode := _go.FormatCodeBytes(codeBytes)
 		files = append(files, &util.GeneratedFile{
-			Name:                strings.Replace(path, "ENTITY", v.Name, 1),
+			Name:                strings.TrimSuffix(strings.Replace(path, "ENTITY", strings.ToLower(v.Name), 1), ".tmpl"),
 			Reader:              bytes.NewReader(formattedCode),
-			SkipIfExist:         false,
-			SkipIfUserCodeMixed: false,
+			SkipIfExist:         true,
+			SkipIfUserCodeMixed: true,
 		})
 	}
 
