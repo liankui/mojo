@@ -30,7 +30,7 @@ func initDB() *db.DB {
 	return d
 }
 
-func InitModel() {
+func Init() {
     // _ = Get{{.Name}}Model()
 }
 
