@@ -76,7 +76,7 @@ func (m *{{.Name}}Model) BatchCreate(ctx context.Context, {{ToLowerCamel .Name}}
 
 func (m *{{.Name}}Model) BatchGet(ctx context.Context, ids ...string) ([]*{{.Go.PackageName}}.{{.Name}}, error) {
 	var {{ToLowerCamel .Name}} []*{{.Go.PackageName}}.{{.Name}}
-	return {{ToLowerCamel .Name}}, m.DB.WithContext(ctx).Find(&{{ToLowerCamel .Name}}, "id = ?", ids).Error
+	return {{ToLowerCamel .Name}}, m.DB.WithContext(ctx).Find(&{{ToLowerCamel .Name}}, ids).Error
 }
 
 func (m *{{.Name}}Model) BatchDelete(ctx context.Context, ids ...string) (int64, error) {
