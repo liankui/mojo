@@ -33,7 +33,7 @@ func CompileInterface(ctx context.Context, decl *lang.InterfaceDecl) (*openapi.O
 		version = pkg.Version
 	}
 
-	title := ""
+	title := "-"
 	description := ""
 	document := decl.Document.Parse().GetStructured()
 	if document != nil && len(document.Blocks) > 0 {
