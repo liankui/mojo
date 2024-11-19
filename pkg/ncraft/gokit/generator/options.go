@@ -74,9 +74,9 @@ func (o *Options) generateTemplatedFiles(ds *data.Service, tmplPaths []string, g
 	svcName := strcase.ToKebab(ds.Interface.BaredName)
 
 	for _, tmplPath := range tmplPaths {
-		if tmplPath == model.TemplatePath {
+		if tmplPath == model.ExampleTemplatePath {
 			m := model.Model{}
-			if files, err := m.Generate(tmplPath, ds); err != nil {
+			if files, err := m.GenerateExample(tmplPath, ds); err != nil {
 				logs.Errorw("failed to generate model templates files", "err", err.Error())
 			} else {
 				if len(files) > 0 {

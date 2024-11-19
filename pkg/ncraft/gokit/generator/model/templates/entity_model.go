@@ -28,7 +28,7 @@ func Get{{.Name}}Model() *{{.Name}}Model {
 	return {{ToLowerCamel .Name}}Model
 }
 
-func New{{.Name}}Model() *{{.Name}}Model {
+func New{{.Name}}Model222() *{{.Name}}Model {
 	m := &{{.Name}}Model{DB: initDB()}
 	if !m.DB.Config.DisableAutoMigrate || !d.Migrator().HasTable(&{{.Go.PackageName}}.{{.Name}}{}) {
 		if err := d.AutoMigrate(&{{.Go.PackageName}}.{{.Name}}{}); err != nil {
