@@ -1,6 +1,6 @@
 FROM alpine:3.18.4
 
-ADD {{.PackageName}}-{{ToKebab .Interface.ServerName}} /{{.PackageName}}-{{ToKebab .Interface.ServerName}}
+ADD {{ToKebab .Interface.ServerName}} /{{ToKebab .Interface.ServerName}}
 
 WORKDIR /
-ENTRYPOINT [ "/{{.PackageName}}-{{ToKebab .Interface.ServerName}}" ]
+ENTRYPOINT [ "/{{ToKebab .Interface.ServerName}}" ]

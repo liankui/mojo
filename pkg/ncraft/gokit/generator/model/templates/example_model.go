@@ -13,8 +13,10 @@ import (
 	"github.com/liankui/mojo/example/auth/go/pkg/auth"
 )
 
-var userModel *UserModel
-var userModelOnce sync.Once
+var (
+	userModel *UserModel
+	userModelOnce sync.Once	
+)
 
 type UserModel struct {
 	DB *db.DB

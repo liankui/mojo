@@ -1,0 +1,32 @@
+#!/bin/bash
+set -e
+
+case "$1" in
+amd64 | arm64) ARCH="$1" ;;
+"") ARCH="amd64" ;;
+*) echo "Unknown 1st option, ARCH:$1" && exit 1 ;;
+esac
+
+CURRENT_DIR=$(cd "$(dirname "$0")" && pwd)
+SERVICE_DIR=$(cd "$CURRENT_DIR"/.. && pwd)
+CMD_DIR="$SERVICE_DIR"/cmd
+REMOTE_PREFIX=harbor.anban.shop:15055/abfuzz
+TAG=latest
+
+(cd "$CMD_DIR"/abfuzz-server && ./xbuild.sh linux "$ARCH") &
+(cd "$CMD_DIR"/agent-server && ./xbuild.sh linux "$ARCH")
+
+gitBranch=$(git branch --show-current)
+gitHash=$(git rev-list -1 HEAD)
+
+SERVERS=(abfuzz-server agent-server callback-invoker-server abproxy-server abproxy-request-server)
+cd "$SERVICE_DIR"/build/abfuzz-server-docker
+for server in "${SERVERS[@]}"; do
+  echo "docker build $server"
+  cd ../"$server"-docker
+  (
+    set -x
+    docker build --platform linux/"$ARCH" --build-arg GIT_BRANCH="$gitBranch" --build-arg GIT_HASH="$gitHash" -f Dockerfile -t "$REMOTE_PREFIX"/abfuzz-"$server":"$TAG" "$SERVICE_DIR"
+    docker push "$REMOTE_PREFIX"/abfuzz-"$server":"$TAG"
+  )
+done
