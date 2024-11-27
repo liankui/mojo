@@ -14,27 +14,27 @@ import (
 )
 
 var (
-	userModel *UserModel
-	userModelOnce sync.Once	
+	user *User
+	userOnce sync.Once	
 )
 
-type UserModel struct {
+type User struct {
 	DB *db.DB
 }
 
-func GetUserModel() *UserModel {
-	userModelOnce.Do(func() {
-		userModel = NewUserModel()
+func GetUserModel() *User {
+	userOnce.Do(func() {
+		user = NewUser()
 	})
 
-	return userModel
+	return user
 }
 
-func NewUserModel() *UserModel {
-	m := &UserModel{DB: initDB()}
+func NewUser() *User {
+	m := &User{DB: initDB()}
 	if !m.DB.Config.DisableAutoMigrate || !d.Migrator().HasTable(&auth.User{}) {
 		if err := d.AutoMigrate(&auth.User{}); err != nil {
-			logs.Error("Init UserModel model err: ", err)
+			logs.Error("Init User model error: ", err)
 			panic(err)
 		}
 	}
@@ -42,27 +42,27 @@ func NewUserModel() *UserModel {
 	return m
 }
 
-func (m *UserModel) Create(ctx context.Context, user *auth.User) (int64, error) {
+func (m *User) Create(ctx context.Context, user *auth.User) (int64, error) {
 	result := m.DB.WithContext(ctx).Create(user)
 	return result.RowsAffected, result.Error
 }
 
-func (m *UserModel) Get(ctx context.Context, id string) (*auth.User, error) {
+func (m *User) Get(ctx context.Context, id string) (*auth.User, error) {
 	user := &auth.User{}
 	return user, m.DB.WithContext(ctx).First(user, "id = ?", id).Error
 }
 
-func (m *UserModel) Delete(ctx context.Context, id string) (int64, error) {
+func (m *User) Delete(ctx context.Context, id string) (int64, error) {
 	result := m.DB.WithContext(ctx).Where("id = ?", id).Delete(&auth.User{})
 	return result.RowsAffected, result.Error
 }
 
-func (m *UserModel) Update(ctx context.Context, user *auth.User) (int64, error) {
+func (m *User) Update(ctx context.Context, user *auth.User) (int64, error) {
 	result := m.DB.WithContext(ctx).Updates(user)
 	return result.RowsAffected, result.Error
 }
 
-func (m *UserModel) List(ctx context.Context, filter string, condition ...string) ([]*auth.User, error) {
+func (m *User) List(ctx context.Context, filter string, condition ...string) ([]*auth.User, error) {
 	var user []*auth.User
 
 	tx := m.DB.WithContext(ctx)
@@ -71,22 +71,22 @@ func (m *UserModel) List(ctx context.Context, filter string, condition ...string
 	return user, tx.Find(&user).Error
 }
 
-func (m *UserModel) BatchCreate(ctx context.Context, user ...*auth.User) (int64, error) {
+func (m *User) BatchCreate(ctx context.Context, user ...*auth.User) (int64, error) {
 	result := m.DB.WithContext(ctx).CreateInBatches(user, len(user))
 	return result.RowsAffected, result.Error
 }
 
-func (m *UserModel) BatchGet(ctx context.Context, ids ...string) ([]*auth.User, error) {
+func (m *User) BatchGet(ctx context.Context, ids ...string) ([]*auth.User, error) {
 	var user []*auth.User
 	return user, m.DB.WithContext(ctx).Find(&user, ids).Error
 }
 
-func (m *UserModel) BatchDelete(ctx context.Context, ids ...string) (int64, error) {
+func (m *User) BatchDelete(ctx context.Context, ids ...string) (int64, error) {
 	result := m.DB.WithContext(ctx).Where("id = ?", ids).Delete(&auth.User{})
 	return result.RowsAffected, result.Error
 }
 
-func (m *UserModel) BatchUpdate(ctx context.Context, user []*auth.User) (int64, error) {
+func (m *User) BatchUpdate(ctx context.Context, user []*auth.User) (int64, error) {
 	result := m.DB.WithContext(ctx).Updates(user)
 	return result.RowsAffected, result.Error
 }

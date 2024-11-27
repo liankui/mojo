@@ -8,8 +8,14 @@ import (
 	"github.com/chaos-io/chaos/db"
 )
 
-var d *db.DB
-var dOnce sync.Once
+var (
+    d *db.DB
+    dOnce sync.Once
+)
+
+func InitModel() {
+	// _ = GetUserModel()
+}
 
 func initDB() *db.DB {
 	dOnce.Do(func() {
@@ -26,6 +32,3 @@ func initDB() *db.DB {
 	return d
 }
 
-func InitModel() {
-	// _ = GetUserModel()
-}
