@@ -18,16 +18,16 @@ var (
 	userOnce sync.Once	
 )
 
-type User struct {
-	DB *db.DB
-}
-
 func GetUserModel() *User {
 	userOnce.Do(func() {
 		user = NewUser()
 	})
 
 	return user
+}
+
+type User struct {
+	DB *db.DB
 }
 
 func NewUser() *User {
