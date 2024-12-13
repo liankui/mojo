@@ -23,7 +23,8 @@ import (
 	"github.com/chaos-io/gokit/tracing"
 	"github.com/chaos-io/gokit/utils/network"
 	"github.com/chaos-io/chaos/logs"
-	{{if .Interface.HasSubscription}}"github.com/chaos-io/chaos/messaging"{{end}}
+    {{if .Interface.HasSubscription}}"github.com/chaos-io/chaos/messaging"
+    _ "github.com/chaos-io/chaos/messaging/nats"{{end}}
 	"github.com/etherlabsio/healthcheck/v2"
 	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 	"github.com/gorilla/mux"
