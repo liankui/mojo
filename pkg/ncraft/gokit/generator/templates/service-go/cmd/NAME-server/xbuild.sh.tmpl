@@ -14,5 +14,9 @@ amd64 | arm64) ARCH="$2" ;;
 *) echo "illegal option: $2" && exit 1 ;;
 esac
 
+gitHash=$(git rev-list -1 HEAD)
+gitBranch=$(git branch --show-current)
+buildTime=$(date "+%Y-%m-%d %H:%M:%S %Z")
+
 set -x
-env CGO_ENABLED=0 GOOS="$OS" GOARCH="$ARCH" go build -ldflags "-s -w" -ldflags "-X main.gitHash=$(git rev-list -1 HEAD) -X main.gitBranch=$(git branch --show-current) -X 'main.buildTime=$(date "+%Y-%m-%d %H:%M:%S %Z")'"
+env CGO_ENABLED=0 GOOS="$OS" GOARCH="$ARCH" go build -ldflags "-s -w -X main.gitHash=$gitHash -X main.gitBranch=$gitBranch -X 'main.buildTime=$buildTime'"

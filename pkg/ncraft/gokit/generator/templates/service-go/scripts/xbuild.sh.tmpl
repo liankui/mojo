@@ -16,8 +16,8 @@ TAG=latest
 (cd "$CMD_DIR"/demo-server && ./xbuild.sh linux "$ARCH") &
 (cd "$CMD_DIR"/agent-server && ./xbuild.sh linux "$ARCH")
 
-gitBranch=$(git branch --show-current)
 gitHash=$(git rev-list -1 HEAD)
+gitBranch=$(git branch --show-current)
 
 SERVERS=(demo-server agent-server)
 cd "$SERVICE_DIR"/build/demo-server-docker
