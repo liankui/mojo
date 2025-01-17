@@ -26,7 +26,7 @@ for server in "${SERVERS[@]}"; do
   cd ../"$server"-docker
   (
     set -x
-    docker build --platform linux/"$ARCH" --build-arg GIT_BRANCH="$gitBranch" --build-arg GIT_HASH="$gitHash" -f Dockerfile -t "$REMOTE_PREFIX"/demo-"$server":"$TAG" "$SERVICE_DIR"
+    docker build -f Dockerfile --platform linux/"$ARCH" --build-arg GIT_BRANCH="$gitBranch" --build-arg GIT_HASH="$gitHash" -t "$REMOTE_PREFIX"/demo-"$server":"$TAG" "$SERVICE_DIR"
     docker push "$REMOTE_PREFIX"/demo-"$server":"$TAG"
   )
 done
