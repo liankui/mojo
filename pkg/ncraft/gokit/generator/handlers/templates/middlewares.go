@@ -5,9 +5,9 @@ package handlers
 
 import (
 	"github.com/chaos-io/gokit/middleware"
+	"github.com/chaos-io/gokit/tracing"
 	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
-	"github.com/go-kit/kit/tracing/opentracing"
-	stdopentracing "github.com/opentracing/opentracing-go"
+	"go.opentelemetry.io/otel/trace"
 
 	{{range $i := .Go.ImportedTypePaths}}
 	"{{$i}}"
@@ -47,9 +47,9 @@ func WrapEndpoints(in svc.Endpoints, options map[string]interface{}) svc.Endpoin
 	// How to apply a middleware to a single endpoint.
 	// in.ExampleEndpoint = authMiddleware(in.ExampleEndpoint)
 	
-	var tracer stdopentracing.Tracer
-	if value, ok := options["tracer"]; ok && value != nil{
-		tracer = value.(stdopentracing.Tracer)
+	var tracer trace.Tracer
+	if value, ok := options["tracer"]; ok && value != nil {
+		tracer = value.(trace.Tracer)
 	}
 	var count *kitprometheus.Counter
 	if value, ok := options["count"]; ok && value != nil {
@@ -59,22 +59,22 @@ func WrapEndpoints(in svc.Endpoints, options map[string]interface{}) svc.Endpoin
 	if value, ok := options["latency"]; ok && value != nil {
 		latency = value.(*kitprometheus.Histogram)
 	}
-	//var validator *middleware.Validator
-	//if value, ok := options["validator"]; ok && value != nil {
-	//	validator = value.(*middleware.Validator)
-	//}
+	// var validator *middleware.Validator
+	// if value, ok := options["validator"]; ok && value != nil {
+	// 	validator = value.(*middleware.Validator)
+	// }
 
 	{{range $i := .Interface.Methods}}
 	{ // {{$i.Name}}
 		if tracer != nil {
-			in.{{ToCamel $i.Name}}Endpoint = opentracing.TraceServer(tracer, "{{$i.Name}}")(in.{{ToCamel $i.Name}}Endpoint)
+			in.{{ToCamel $i.Name}}Endpoint = tracing.TraceServer(tracer, "{{$i.Name}}")(in.{{ToCamel $i.Name}}Endpoint)
  		}
 		if count != nil && latency != nil {
 			in.{{ToCamel $i.Name}}Endpoint = middleware.Instrumenting(latency.With("method", "{{$i.Name}}"), count.With("method", "{{$i.Name}}"))(in.{{ToCamel $i.Name}}Endpoint)
 		}
-		//if validator != nil {
-		//	in.{{ToCamel $i.Name}}Endpoint = validator.Validate()(in.{{ToCamel $i.Name}}Endpoint)
-		//}
+		// if validator != nil {
+		// 	in.{{ToCamel $i.Name}}Endpoint = validator.Validate()(in.{{ToCamel $i.Name}}Endpoint)
+		// }
 	}
 	{{- end}}
 

@@ -87,29 +87,28 @@ package svc
 
 import (
 	"bytes"
-	"encoding/json"
-	"context"
 	"compress/gzip"
+	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
-    "reflect"
+	"reflect"
 	"strconv"
 	"strings"
-	"io"
 
+	"github.com/chaos-io/chaos/logs"
+	pagination "github.com/chaos-io/gokit/pagination"
+	"github.com/chaos-io/gokit/tracing"
+	nhttp "github.com/chaos-io/gokit/transport/http"
 	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/tracing/opentracing"
+	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
 	"github.com/json-iterator/go"
-	"github.com/chaos-io/chaos/logs"
-	"github.com/pkg/errors"
-
-	httptransport "github.com/go-kit/kit/transport/http"
 	mjhttp "github.com/mojo-lang/http/go/pkg/mojo/http"
-	pagination "github.com/chaos-io/gokit/pagination"
-	nhttp "github.com/chaos-io/gokit/transport/http"
-	stdopentracing "github.com/opentracing/opentracing-go"
+	"github.com/pkg/errors"
+	"go.opentelemetry.io/otel/trace"
 
     {{$corePackage := "github.com/mojo-lang/core/go/pkg/mojo/core"}}
     "{{$corePackage}}"
@@ -148,7 +147,7 @@ func init()  {
 }
 
 // RegisterHttpHandler register a set of endpoints available on predefined paths to the router.
-func RegisterHttpHandler(router *mux.Router, endpoints Endpoints, tracer stdopentracing.Tracer, logger log.Logger)  {
+func RegisterHttpHandler(router *mux.Router, endpoints Endpoints, tracer trace.Tracer, logger log.Logger)  {
 	{{- if .Interface.Methods}}
 		serverOptions := []httptransport.ServerOption{
 			httptransport.ServerBefore(headersToContext, queryToContext),
@@ -160,7 +159,7 @@ func RegisterHttpHandler(router *mux.Router, endpoints Endpoints, tracer stdopen
 
 	addTracerOption := func(methodName string) []httptransport.ServerOption {
 	    if tracer != nil {
-	        return append(serverOptions, httptransport.ServerBefore(opentracing.HTTPToContext(tracer, methodName, logger)))
+	        return append(serverOptions, httptransport.ServerBefore(tracing.HTTPToContext(tracer, methodName)))
 	    }
 	    return serverOptions
 	}
@@ -174,7 +173,6 @@ func RegisterHttpHandler(router *mux.Router, endpoints Endpoints, tracer stdopen
 					EncodeHTTP{{ToCamel $method.Name}}Response,{{else}}
 					EncodeHTTPGenericResponse,{{end}}
 					addTracerOption("{{$method.Name}}")...,
-					// append(serverOptions, httptransport.ServerBefore(opentracing.HTTPToContext(tracer, "{{ToSnake $method.Name}}", logger)))...,
 			))
 		{{- end}}
 	{{- end}}

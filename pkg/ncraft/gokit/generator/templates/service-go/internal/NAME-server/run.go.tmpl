@@ -75,10 +75,12 @@ func NewEndpoints(options map[string]interface{}) svc.Endpoints {
 
 func RegisterService(cfg nserver.Config, r *mux.Router, s *grpc.Server) svc.Endpoints {
     // tracing init
-	tracer, c := tracing.New(FullServiceName)
-    if c != nil {
-        defer c.Close()
-    }
+	tracer, shutdown := tracing.New(FullServiceName)
+	if shutdown != nil {
+		defer func() {
+			_ = shutdown
+		}()
+	}
 
     // Create a single logger, which we'll use and give to other components.
     logger := kit.Logger()
