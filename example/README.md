@@ -32,7 +32,7 @@ auth
 
 ### 2.在mojo/user目录下构思接口和数据结构
 
-添加文件，内容如下
+2.1 添加数据结构文件user.mojo
 
 ```bash
 cat <<EOF > ./auth/mojo/auth/user.mojo
@@ -50,7 +50,9 @@ type User {
 }
 EOF
 ```
-添加文件，内容如下
+
+2.2 添加v1版本接口文件users.mojo
+
 ```bash
 mkdir -pv ./auth/mojo/auth/v1
 cat <<EOF > ./auth/mojo/auth/v1/users.mojo
@@ -110,6 +112,8 @@ auth
 chaosmojo build --path=./auth --targets=api,service
 ```
 
+其中：
+
 --targets=api参数命令构建api接口，可生成openapi、document、protobuf和go目录文件
 
 --targets=service参数命令构建service-go目录，其中包含http服务相关的代码
@@ -121,7 +125,7 @@ tree auth -L 2
 ```
 
 ``` 
-user
+auth
 ├── README.md
 ├── document
 │     └── user
