@@ -186,7 +186,7 @@ func Run(cfg nserver.Config) {
     {{if .Interface.HasSubscription}}
     client, err := messaging.NewClient()
     if err != nil {
-        logs.Fatalw("Agent Server Run: failed to create the message client", "error", err.Error())
+        logs.Fatalw("Agent Server Run: failed to create the message client", "error", err)
     }
 
     for _, sub := range client.GetConfig().GetSubscriptions() {
@@ -204,7 +204,7 @@ func Run(cfg nserver.Config) {
             {{if $i.Subscriptions}}case "{{$i.Name}}":
                 request := &pb.{{ToCamel $i.Name}}Request{}
                 if err = jsoniter.ConfigFastest.UnmarshalFromString(m.Data, request); err != nil {
-                    logs.Warnw("failed to unmarshal the queue's message to json", "error", err.Error())
+                    logs.Warnw("failed to unmarshal the queue's message to json", "error", err)
                     m.Term()
                     return err
                 }

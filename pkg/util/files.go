@@ -99,7 +99,7 @@ func clearFiles(path string, recursive bool, filter func(file string) bool) erro
 	}
 
 	if err != nil {
-		logs.Errorw("filepath.Walk() failed", "error", err.Error())
+		logs.Errorw("filepath.Walk() failed", "error", err)
 		return err
 	}
 
